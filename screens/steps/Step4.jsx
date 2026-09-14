@@ -1,1130 +1,886 @@
-// // // // import React from "react";
-// // // // import { View, Text, ScrollView, TextInput } from "react-native";
-// // // // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // // export default function Step4({ data, setData }) {
-// // // //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-  
-// // // //   return (
-// // // //     <ScrollView showsVerticalScrollIndicator={false}>
-// // // //       <SectionHeader title="जोडीदाराविषयी अपेक्षा" />
-// // // //       <View style={styles.marathiPadWrap}>
-// // // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>(छंद/गुण/स्वभाव/वांछनीय शेरे) <Text style={{ color: "red" }}>*</Text></Text>
-// // // //         <TextInput
-// // // //           style={[styles.marathiPad, { height: 90 }]}
-// // // //           multiline
-// // // //           placeholder="Expectations"
-// // // //           placeholderTextColor="#bbb"
-// // // //           value={data.expectations}
-// // // //           onChangeText={set("expectations")}
-// // // //         />
-// // // //         <Text style={styles.hint}>For e.g.: Smart, अनुरूप, इंजिनीअर, डॉक्टर, मिळवती इत्र.</Text>
-// // // //       </View>
-
-// // // //       <SectionHeader title="Father's / Parents Details" />
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // // //           <Field label="Title" required value={data.fatherTitle} onChangeText={set("fatherTitle")} placeholder="श्री" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // // //           <Field label="वडिलांचे / पालकांचे नाव" required value={data.fatherName} onChangeText={set("fatherName")} placeholder="वडिलांचे नाव" />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // //           <Field label="पत्ता" required value={data.fatherAddress} onChangeText={set("fatherAddress")} placeholder="पत्ता" />
-// // // //         </View>
-// // // //       </View>
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 1, marginRight: 6 }}>
-// // // //           <Field label="दूरध्वनी (with STD)" value={data.fatherPhone} onChangeText={set("fatherPhone")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// // // //           <Field label="मोबाईल" required value={data.fatherMobile} onChangeText={set("fatherMobile")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 6 }}>
-// // // //           <Field label="Email" value={data.fatherEmail} onChangeText={set("fatherEmail")} keyboardType="email-address" />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       <SectionHeader title="संपर्कासाठी नाव व पत्ता 1" />
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // // //           <Field label="Title" value={data.contact1Title} onChangeText={set("contact1Title")} placeholder="श्री" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // // //           <Field label="संपर्काचे नाव" value={data.contact1Name} onChangeText={set("contact1Name")} placeholder="संपर्काचे नाव" />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // //           <Field label="पत्ता" value={data.contact1Address} onChangeText={set("contact1Address")} placeholder="पत्ता" />
-// // // //         </View>
-// // // //       </View>
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field label="दूरध्वनी (with STD)" value={data.contact1Phone} onChangeText={set("contact1Phone")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field label="मोबाईल" value={data.contact1Mobile} onChangeText={set("contact1Mobile")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       <SectionHeader title="संपर्कासाठी नाव व पत्ता 2" />
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // // //           <Field label="Title" value={data.contact2Title} onChangeText={set("contact2Title")} placeholder="श्री" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // // //           <Field label="संपर्काचे नाव" value={data.contact2Name} onChangeText={set("contact2Name")} placeholder="संपर्काचे नाव" />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // //           <Field label="पत्ता" value={data.contact2Address} onChangeText={set("contact2Address")} placeholder="पत्ता" />
-// // // //         </View>
-// // // //       </View>
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field label="दूरध्वनी (with STD)" value={data.contact2Phone} onChangeText={set("contact2Phone")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field label="मोबाईल" value={data.contact2Mobile} onChangeText={set("contact2Mobile")} keyboardType="phone-pad" />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       <View style={styles.marathiPadWrap}>
-// // // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-// // // //         <TextInput style={styles.marathiPad} multiline placeholder="Type in Marathi..." placeholderTextColor="#bbb" />
-// // // //       </View>
-// // // //     </ScrollView>
-// // // //   );
-// // // // }
-
-
-
-
-
-
-
-
-
-// // // import React from "react";
-// // // import { View, Text, ScrollView, TextInput } from "react-native";
-// // // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // export default function Step4({ data, setData }) {
-
-// // //   // ---------------------------------------------------------
-// // //   // LOGIC: MARATHI ONLY (Strict)
-// // //   // Blocks English characters. Allows Marathi, Numbers, Spaces, Punctuation.
-// // //   // ---------------------------------------------------------
-// // //   const handleMarathiInput = (key) => (text) => {
-// // //     const marathiOnly = text.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-// // //     setData((p) => ({ ...p, [key]: marathiOnly }));
-// // //   };
-
-// // //   // ---------------------------------------------------------
-// // //   // LOGIC: NUMBERS ONLY
-// // //   // ---------------------------------------------------------
-// // //   const handleNumberInput = (key) => (text) => {
-// // //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// // //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// // //   };
-
-// // //   // Generic setter for special fields (like Email)
-// // //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-// // //   return (
-// // //     <ScrollView showsVerticalScrollIndicator={false}>
-// // //       <SectionHeader title="जोडीदाराविषयी अपेक्षा" />
-      
-// // //       {/* MARATHI ONLY EXPECTATIONS */}
-// // //       <View style={styles.marathiPadWrap}>
-// // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// // //           (छंद/गुण/स्वभाव/वांछनीय शेरे) <Text style={{ color: "red" }}>*</Text>
-// // //         </Text>
-// // //         <TextInput
-// // //           style={[styles.marathiPad, { height: 90 }]}
-// // //           multiline
-// // //           placeholder="येथे अपेक्षा लिहा..."
-// // //           placeholderTextColor="#bbb"
-// // //           value={data.expectations}
-// // //           onChangeText={handleMarathiInput("expectations")}
-// // //         />
-// // //         <Text style={styles.hint}>उदा: हुशार, अनुरूप, इंजिनीअर, डॉक्टर इ.</Text>
-// // //       </View>
-
-// // //       <SectionHeader title="Father's / Parents Details" />
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // //           <Field 
-// // //             label="Title" 
-// // //             required 
-// // //             value={data.fatherTitle} 
-// // //             onChangeText={handleMarathiInput("fatherTitle")} 
-// // //             placeholder="श्री" 
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // //           <Field 
-// // //             label="वडिलांचे / पालकांचे नाव" 
-// // //             required 
-// // //             value={data.fatherName} 
-// // //             onChangeText={handleMarathiInput("fatherName")} 
-// // //             placeholder="नाव" 
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // //           <Field 
-// // //             label="पत्ता" 
-// // //             required 
-// // //             value={data.fatherAddress} 
-// // //             onChangeText={handleMarathiInput("fatherAddress")} 
-// // //             placeholder="शहर/गाव" 
-// // //           />
-// // //         </View>
-// // //       </View>
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 1, marginRight: 6 }}>
-// // //           <Field label="दूरध्वनी" value={data.fatherPhone} onChangeText={handleNumberInput("fatherPhone")} keyboardType="phone-pad" />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// // //           <Field label="मोबाईल" required value={data.fatherMobile} onChangeText={handleNumberInput("fatherMobile")} keyboardType="phone-pad" />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 6 }}>
-// // //           <Field label="Email" value={data.fatherEmail} onChangeText={set("fatherEmail")} keyboardType="email-address" />
-// // //         </View>
-// // //       </View>
-
-// // //       <SectionHeader title="संपर्कासाठी नाव व पत्ता १" />
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // //           <Field label="Title" value={data.contact1Title} onChangeText={handleMarathiInput("contact1Title")} placeholder="श्री" />
-// // //         </View>
-// // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // //           <Field label="संपर्काचे नाव" value={data.contact1Name} onChangeText={handleMarathiInput("contact1Name")} placeholder="नाव" />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // //           <Field label="पत्ता" value={data.contact1Address} onChangeText={handleMarathiInput("contact1Address")} placeholder="पत्ता" />
-// // //         </View>
-// // //       </View>
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field label="दूरध्वनी" value={data.contact1Phone} onChangeText={handleNumberInput("contact1Phone")} keyboardType="phone-pad" />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field label="मोबाईल" value={data.contact1Mobile} onChangeText={handleNumberInput("contact1Mobile")} keyboardType="phone-pad" />
-// // //         </View>
-// // //       </View>
-
-// // //       <SectionHeader title="संपर्कासाठी नाव व पत्ता २" />
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 0.6, marginRight: 6 }}>
-// // //           <Field label="Title" value={data.contact2Title} onChangeText={handleMarathiInput("contact2Title")} placeholder="श्री" />
-// // //         </View>
-// // //         <View style={{ flex: 1.4, marginHorizontal: 3 }}>
-// // //           <Field label="संपर्काचे नाव" value={data.contact2Name} onChangeText={handleMarathiInput("contact2Name")} placeholder="नाव" />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // //           <Field label="पत्ता" value={data.contact2Address} onChangeText={handleMarathiInput("contact2Address")} placeholder="पत्ता" />
-// // //         </View>
-// // //       </View>
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field label="दूरध्वनी" value={data.contact2Phone} onChangeText={handleNumberInput("contact2Phone")} keyboardType="phone-pad" />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field label="मोबाईल" value={data.contact2Mobile} onChangeText={handleNumberInput("contact2Mobile")} keyboardType="phone-pad" />
-// // //         </View>
-// // //       </View>
-
-// // //       <View style={styles.marathiPadWrap}>
-// // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-// // //         <TextInput 
-// // //           style={styles.marathiPad} 
-// // //           multiline 
-// // //           placeholder="येथे मराठीत टाइप करा..." 
-// // //           placeholderTextColor="#bbb"
-// // //           value={data.extraMarathiNotes || ""}
-// // //           onChangeText={handleMarathiInput("extraMarathiNotes")}
-// // //         />
-// // //       </View>
-// // //     </ScrollView>
-// // //   );
-// // // }
-
-
-
-
-
-
-
-
-// // // api
-// // import React, { useState, useRef } from "react";
-// // import { View, Text, ScrollView, TextInput, ActivityIndicator } from "react-native";
-// // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // Reuse the translation helper
-// // const translateText = async (text, targetLanguage = "mr") => {
-// //   if (!text || text.trim().length === 0) return "";
-// //   const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-// //   try {
-// //     const response = await fetch(
-// //       `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-// //       {
-// //         method: "POST",
-// //         headers: { "Content-Type": "application/json" },
-// //         body: JSON.stringify({
-// //           q: text,
-// //           target: targetLanguage,
-// //           source: "en",
-// //           format: "text",
-// //         }),
-// //       }
-// //     );
-// //     const data = await response.json();
-// //     return data.data?.translations?.[0]?.translatedText || text;
-// //   } catch (error) {
-// //     console.error("Translation error:", error);
-// //     return text;
-// //   }
-// // };
-
-// // export default function Step4({ data, setData }) {
-// //   const [translatingFields, setTranslatingFields] = useState({});
-// //   const typingTimeoutRef = useRef(null);
-
-// //   // ---------------------------------------------------------
-// //   // LOGIC: DEBOUNCED AUTO-TRANSLATE (English to Marathi)
-// //   // ---------------------------------------------------------
-// //   const handleMarathiInput = (key) => (val) => {
-// //     setData((p) => ({ ...p, [key]: val }));
-
-// //     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-// //     const englishChars = val.match(/[a-zA-Z]/g);
-
-// //     if (englishChars && englishChars.length > 0) {
-// //       const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-// //       if (englishText.length > 1) {
-// //         setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-// //         typingTimeoutRef.current = setTimeout(async () => {
-// //           try {
-// //             const translated = await translateText(englishText, "mr");
-// //             setData((p) => ({ ...p, [key]: translated }));
-// //           } finally {
-// //             setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-// //           }
-// //         }, 800);
-// //       }
-// //     } else {
-// //       // Pure Marathi filtering
-// //       const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-// //       setData((p) => ({ ...p, [key]: filtered }));
-// //     }
-// //   };
-
-// //   const handleNumberInput = (key) => (text) => {
-// //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// //   };
-
-// //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-// //   // Helper for spinner
-// //   const renderIndicator = (key, isLarge = false) => translatingFields[key] && (
-// //     <View style={{ position: 'absolute', right: 10, top: isLarge ? 35 : '55%' }}>
-// //       <ActivityIndicator size="small" color="#f97316" />
-// //     </View>
-// //   );
-
-// //   return (
-// //     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
-// //       <SectionHeader title="जोडीदाराविषयी अपेक्षा" />
-      
-// //       {/* MARATHI EXPECTATIONS */}
-// //       <View style={[styles.marathiPadWrap, { position: 'relative' }]}>
-// //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// //           (छंद/गुण/स्वभाव/वांछनीय शेरे) <Text style={{ color: "red" }}>*</Text>
-// //         </Text>
-// //         <TextInput
-// //           style={[styles.marathiPad, { height: 90 }, translatingFields.expectations && { opacity: 0.6 }]}
-// //           multiline
-// //           placeholder="येथे अपेक्षा लिहा (English type for Marathi)..."
-// //           placeholderTextColor="#bbb"
-// //           value={data.expectations}
-// //           onChangeText={handleMarathiInput("expectations")}
-// //         />
-// //         {renderIndicator("expectations", true)}
-// //         <Text style={styles.hint}>उदा: हुशार, अनुरूप, इंजिनीअर, डॉक्टर इ.</Text>
-// //       </View>
-
-// //       <SectionHeader title="Father's / Parents Details" />
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-// //           <Field 
-// //             label="Title" 
-// //             required 
-// //             value={data.fatherTitle} 
-// //             onChangeText={handleMarathiInput("fatherTitle")} 
-// //             placeholder="श्री" 
-// //           />
-// //           {renderIndicator("fatherTitle")}
-// //         </View>
-// //         <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-// //           <Field 
-// //             label="वडिलांचे / पालकांचे नाव" 
-// //             required 
-// //             value={data.fatherName} 
-// //             onChangeText={handleMarathiInput("fatherName")} 
-// //             placeholder="नाव" 
-// //           />
-// //           {renderIndicator("fatherName")}
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-// //           <Field 
-// //             label="पत्ता" 
-// //             required 
-// //             value={data.fatherAddress} 
-// //             onChangeText={handleMarathiInput("fatherAddress")} 
-// //             placeholder="शहर/गाव" 
-// //           />
-// //           {renderIndicator("fatherAddress")}
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1, marginRight: 6 }}>
-// //           <Field label="दूरध्वनी" value={data.fatherPhone} onChangeText={handleNumberInput("fatherPhone")} keyboardType="phone-pad" />
-// //         </View>
-// //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// //           <Field label="मोबाईल" required value={data.fatherMobile} onChangeText={handleNumberInput("fatherMobile")} keyboardType="phone-pad" />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 6 }}>
-// //           <Field label="Email" value={data.fatherEmail} onChangeText={set("fatherEmail")} keyboardType="email-address" />
-// //         </View>
-// //       </View>
-
-// //       <SectionHeader title="संपर्कासाठी नाव व पत्ता १" />
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-// //           <Field label="Title" value={data.contact1Title} onChangeText={handleMarathiInput("contact1Title")} placeholder="श्री" />
-// //           {renderIndicator("contact1Title")}
-// //         </View>
-// //         <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-// //           <Field label="संपर्काचे नाव" value={data.contact1Name} onChangeText={handleMarathiInput("contact1Name")} placeholder="नाव" />
-// //           {renderIndicator("contact1Name")}
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-// //           <Field label="पत्ता" value={data.contact1Address} onChangeText={handleMarathiInput("contact1Address")} placeholder="पत्ता" />
-// //           {renderIndicator("contact1Address")}
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field label="दूरध्वनी" value={data.contact1Phone} onChangeText={handleNumberInput("contact1Phone")} keyboardType="phone-pad" />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field label="मोबाईल" value={data.contact1Mobile} onChangeText={handleNumberInput("contact1Mobile")} keyboardType="phone-pad" />
-// //         </View>
-// //       </View>
-
-// //       <SectionHeader title="संपर्कासाठी नाव व पत्ता २" />
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-// //           <Field label="Title" value={data.contact2Title} onChangeText={handleMarathiInput("contact2Title")} placeholder="श्री" />
-// //           {renderIndicator("contact2Title")}
-// //         </View>
-// //         <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-// //           <Field label="संपर्काचे नाव" value={data.contact2Name} onChangeText={handleMarathiInput("contact2Name")} placeholder="नाव" />
-// //           {renderIndicator("contact2Name")}
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-// //           <Field label="पत्ता" value={data.contact2Address} onChangeText={handleMarathiInput("contact2Address")} placeholder="पत्ता" />
-// //           {renderIndicator("contact2Address")}
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field label="दूरध्वनी" value={data.contact2Phone} onChangeText={handleNumberInput("contact2Phone")} keyboardType="phone-pad" />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field label="मोबाईल" value={data.contact2Mobile} onChangeText={handleNumberInput("contact2Mobile")} keyboardType="phone-pad" />
-// //         </View>
-// //       </View>
-
-// //       <View style={[styles.marathiPadWrap, { position: 'relative' }]}>
-// //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-// //         <TextInput 
-// //           style={[styles.marathiPad, translatingFields.extraMarathiNotes && { opacity: 0.6 }]} 
-// //           multiline 
-// //           placeholder="येथे मराठीत टाइप करा..." 
-// //           placeholderTextColor="#bbb"
-// //           value={data.extraMarathiNotes || ""}
-// //           onChangeText={handleMarathiInput("extraMarathiNotes")}
-// //         />
-// //         {renderIndicator("extraMarathiNotes", true)}
-// //       </View>
-// //     </ScrollView>
-// //   );
-// // }
-
-
-
-
-// // new 
-// // api - FIXED WITH WORKING KEYBOARD SCROLL
-// import React, { useState, useRef } from "react";
-// import { View, Text, ScrollView, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
-// import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // Reuse the translation helper
-// const translateText = async (text, targetLanguage = "mr") => {
-//   if (!text || text.trim().length === 0) return "";
-//   const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-//   try {
-//     const response = await fetch(
-//       `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-//       {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({
-//           q: text,
-//           target: targetLanguage,
-//           source: "en",
-//           format: "text",
-//         }),
-//       }
-//     );
-//     const data = await response.json();
-//     return data.data?.translations?.[0]?.translatedText || text;
-//   } catch (error) {
-//     console.error("Translation error:", error);
-//     return text;
-//   }
-// };
-
-// export default function Step4({ data, setData }) {
-//   const [translatingFields, setTranslatingFields] = useState({});
-//   const typingTimeoutRef = useRef(null);
-//   const scrollViewRef = useRef(null);
-
-//   // ---------------------------------------------------------
-//   // LOGIC: DEBOUNCED AUTO-TRANSLATE (English to Marathi)
-//   // ---------------------------------------------------------
-//   const handleMarathiInput = (key) => (val) => {
-//     setData((p) => ({ ...p, [key]: val }));
-
-//     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-//     const englishChars = val.match(/[a-zA-Z]/g);
-
-//     if (englishChars && englishChars.length > 0) {
-//       const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-//       if (englishText.length > 1) {
-//         setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-//         typingTimeoutRef.current = setTimeout(async () => {
-//           try {
-//             const translated = await translateText(englishText, "mr");
-//             setData((p) => ({ ...p, [key]: translated }));
-//           } finally {
-//             setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-//           }
-//         }, 800);
-//       }
-//     } else {
-//       // Pure Marathi filtering
-//       const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-//       setData((p) => ({ ...p, [key]: filtered }));
-//     }
-//   };
-
-//   const handleNumberInput = (key) => (text) => {
-//     const numbersOnly = text.replace(/[^0-9]/g, "");
-//     setData((p) => ({ ...p, [key]: numbersOnly }));
-//   };
-
-//   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-//   // ✅ KEYBOARD SCROLL HANDLER
-//   const handleFieldFocus = () => {
-//     setTimeout(() => {
-//       scrollViewRef.current?.scrollToEnd({ animated: true });
-//     }, 300);
-//   };
-
-//   // Helper for spinner
-//   const renderIndicator = (key, isLarge = false) => translatingFields[key] && (
-//     <View style={{ position: 'absolute', right: 10, top: isLarge ? 35 : '55%' }}>
-//       <ActivityIndicator size="small" color="#f97316" />
-//     </View>
-//   );
-
-//   return (
-//     <KeyboardAvoidingView 
-//       behavior={Platform.OS === "ios" ? "padding" : "height"}
-//       style={{ flex: 1 }}
-//       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
-//     >
-//       <ScrollView 
-//         ref={scrollViewRef}
-//         showsVerticalScrollIndicator={false} 
-//         contentContainerStyle={{ paddingBottom: 40 }}
-//         keyboardShouldPersistTaps="handled"
-//         scrollEventThrottle={16}
-//       >
-//         <SectionHeader title="जोडीदाराविषयी अपेक्षा" />
-        
-//         {/* MARATHI EXPECTATIONS */}
-//         <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-//           <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-//             (छंद/गुण/स्वभाव/वांछनीय शेरे) <Text style={{ color: "red" }}>*</Text>
-//           </Text>
-//           <TextInput
-//             style={[styles.marathiPad, { height: 90 }, translatingFields.expectations && { opacity: 0.6 }]}
-//             multiline
-//             placeholder="येथे अपेक्षा लिहा (English type for Marathi)..."
-//             placeholderTextColor="#bbb"
-//             value={data.expectations}
-//             onChangeText={handleMarathiInput("expectations")}
-//             onFocus={handleFieldFocus}
-//           />
-//           {renderIndicator("expectations", true)}
-//           <Text style={styles.hint}>उदा: हुशार, अनुरूप, इंजिनीअर, डॉक्टर इ.</Text>
-//         </View>
-
-//         <SectionHeader title="Father's / Parents Details" />
-//         <View style={styles.row3}>
-//           <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-//             <Field 
-//               label="Title" 
-//               required 
-//               value={data.fatherTitle} 
-//               onChangeText={handleMarathiInput("fatherTitle")} 
-//               placeholder="श्री"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("fatherTitle")}
-//           </View>
-//           <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-//             <Field 
-//               label="वडिलांचे / पालकांचे नाव" 
-//               required 
-//               value={data.fatherName} 
-//               onChangeText={handleMarathiInput("fatherName")} 
-//               placeholder="नाव"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("fatherName")}
-//           </View>
-//           <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-//             <Field 
-//               label="पत्ता" 
-//               required 
-//               value={data.fatherAddress} 
-//               onChangeText={handleMarathiInput("fatherAddress")} 
-//               placeholder="शहर/गाव"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("fatherAddress")}
-//           </View>
-//         </View>
-
-//         <View style={styles.row3}>
-//           <View style={{ flex: 1, marginRight: 6 }}>
-//             <Field 
-//               label="दूरध्वनी" 
-//               value={data.fatherPhone} 
-//               onChangeText={handleNumberInput("fatherPhone")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//           <View style={{ flex: 1, marginHorizontal: 3 }}>
-//             <Field 
-//               label="मोबाईल" 
-//               required 
-//               value={data.fatherMobile} 
-//               onChangeText={handleNumberInput("fatherMobile")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 6 }}>
-//             <Field 
-//               label="Email" 
-//               value={data.fatherEmail} 
-//               onChangeText={set("fatherEmail")} 
-//               keyboardType="email-address"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//         </View>
-
-//         <SectionHeader title="संपर्कासाठी नाव व पत्ता १" />
-//         <View style={styles.row3}>
-//           <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-//             <Field 
-//               label="Title" 
-//               value={data.contact1Title} 
-//               onChangeText={handleMarathiInput("contact1Title")} 
-//               placeholder="श्री"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact1Title")}
-//           </View>
-//           <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-//             <Field 
-//               label="संपर्काचे नाव" 
-//               value={data.contact1Name} 
-//               onChangeText={handleMarathiInput("contact1Name")} 
-//               placeholder="नाव"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact1Name")}
-//           </View>
-//           <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-//             <Field 
-//               label="पत्ता" 
-//               value={data.contact1Address} 
-//               onChangeText={handleMarathiInput("contact1Address")} 
-//               placeholder="पत्ता"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact1Address")}
-//           </View>
-//         </View>
-
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8 }}>
-//             <Field 
-//               label="दूरध्वनी" 
-//               value={data.contact1Phone} 
-//               onChangeText={handleNumberInput("contact1Phone")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8 }}>
-//             <Field 
-//               label="मोबाईल" 
-//               value={data.contact1Mobile} 
-//               onChangeText={handleNumberInput("contact1Mobile")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//         </View>
-
-//         <SectionHeader title="संपर्कासाठी नाव व पत्ता २" />
-//         <View style={styles.row3}>
-//           <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-//             <Field 
-//               label="Title" 
-//               value={data.contact2Title} 
-//               onChangeText={handleMarathiInput("contact2Title")} 
-//               placeholder="श्री"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact2Title")}
-//           </View>
-//           <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-//             <Field 
-//               label="संपर्काचे नाव" 
-//               value={data.contact2Name} 
-//               onChangeText={handleMarathiInput("contact2Name")} 
-//               placeholder="नाव"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact2Name")}
-//           </View>
-//           <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-//             <Field 
-//               label="पत्ता" 
-//               value={data.contact2Address} 
-//               onChangeText={handleMarathiInput("contact2Address")} 
-//               placeholder="पत्ता"
-//               onFocus={handleFieldFocus}
-//             />
-//             {renderIndicator("contact2Address")}
-//           </View>
-//         </View>
-
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8 }}>
-//             <Field 
-//               label="दूरध्वनी" 
-//               value={data.contact2Phone} 
-//               onChangeText={handleNumberInput("contact2Phone")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8 }}>
-//             <Field 
-//               label="मोबाईल" 
-//               value={data.contact2Mobile} 
-//               onChangeText={handleNumberInput("contact2Mobile")} 
-//               keyboardType="phone-pad"
-//               onFocus={handleFieldFocus}
-//             />
-//           </View>
-//         </View>
-
-//         <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-//           <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-//           <TextInput 
-//             style={[styles.marathiPad, translatingFields.extraMarathiNotes && { opacity: 0.6 }]} 
-//             multiline 
-//             placeholder="येथे मराठीत टाइप करा..." 
-//             placeholderTextColor="#bbb"
-//             value={data.extraMarathiNotes || ""}
-//             onChangeText={handleMarathiInput("extraMarathiNotes")}
-//             onFocus={handleFieldFocus}
-//           />
-//           {renderIndicator("extraMarathiNotes", true)}
-//         </View>
-//       </ScrollView>
-//     </KeyboardAvoidingView>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Step4.jsx - FIXED WITH AGGRESSIVE KEYBOARD SCROLL
-import React, { useState, useRef } from "react";
-import { View, Text, ScrollView, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
-import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// Reuse the translation helper
-const translateText = async (text, targetLanguage = "mr") => {
-  if (!text || text.trim().length === 0) return "";
-  const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-  try {
-    const response = await fetch(
-      `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          target: targetLanguage,
-          source: "en",
-          format: "text",
-        }),
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
+import registrationApi from "../../api/registrationApi";
+import { getAuthUserId } from "../../api/apiClient";
+
+const TITLES = ["श्री", "सौ", "कै.", "डॉ."];
+
+export default function Step4({
+  data = {},
+  setData,
+  onNext,
+  onBack,
+  candidateId,
+  applicationNo = "New",
+  currentUser = {},
+}) {
+  // -------------------------------------------------------------
+  // STATE
+  // -------------------------------------------------------------
+  const [expectations, setExpectations] = useState(data.expectations || "");
+
+  // Guardian
+  const [fatherTitle, setFatherTitle] = useState(data.fatherTitle || "श्री");
+  const [fatherName, setFatherName] = useState(data.fatherName || "");
+  const [fatherAddress, setFatherAddress] = useState(data.fatherAddress || "");
+  const [fatherMobile, setFatherMobile] = useState(data.fatherMobile || "");
+  const [fatherPhone, setFatherPhone] = useState(data.fatherPhone || "");
+  const [fatherEmail, setFatherEmail] = useState(data.fatherEmail || "");
+
+  // Alt Contact 1
+  const [showAlt1, setShowAlt1] = useState(!!data.altName1);
+  const [altTitle1, setAltTitle1] = useState(data.altTitle1 || "श्री");
+  const [altName1, setAltName1] = useState(data.altName1 || "");
+  const [altAddress1, setAltAddress1] = useState(data.altAddress1 || "");
+  const [altMobile1, setAltMobile1] = useState(data.altMobile1 || "");
+  const [altPhone1, setAltPhone1] = useState(data.altPhone1 || "");
+
+  // Alt Contact 2
+  const [showAlt2, setShowAlt2] = useState(!!data.altName2);
+  const [altTitle2, setAltTitle2] = useState(data.altTitle2 || "श्री");
+  const [altName2, setAltName2] = useState(data.altName2 || "");
+  const [altAddress2, setAltAddress2] = useState(data.altAddress2 || "");
+  const [altMobile2, setAltMobile2] = useState(data.altMobile2 || "");
+  const [altPhone2, setAltPhone2] = useState(data.altPhone2 || "");
+
+  const [saving, setSaving] = useState(false);
+  const [loadingInitial, setLoadingInitial] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [clientStamp, setClientStamp] = useState(data.clientStamp || data.ClientStamp || null);
+
+  const fatherAddressRef = useRef(null);
+  const fatherMobileRef = useRef(null);
+  const fatherPhoneRef = useRef(null);
+  const fatherEmailRef = useRef(null);
+
+  // -------------------------------------------------------------
+  // LOAD SAVED DETAILS (GET /api/registration/GetExpectationParentDetails)
+  // -------------------------------------------------------------
+  useEffect(() => {
+    const effectiveId = Number(candidateId || currentUser?.CandidateId || 0);
+    if (effectiveId > 0) {
+      loadSavedDetails(effectiveId);
+    }
+  }, [candidateId]);
+
+  const loadSavedDetails = async (id) => {
+    try {
+      setLoadingInitial(true);
+      const res = await registrationApi.getExpectationParentDetails(id);
+      console.log("Step 4 loaded expectation details:", res);
+      if (res) {
+        const stamp = res.ClientStamp || res.clientStamp;
+        if (stamp) setClientStamp(stamp);
+
+        if (res.Expectations) setExpectations(res.Expectations);
+        if (res.FatherGurdianTitle) setFatherTitle(res.FatherGurdianTitle);
+        if (res.NameOfFatherGuardian) setFatherName(res.NameOfFatherGuardian);
+        if (res.ParentalAddress) setFatherAddress(res.ParentalAddress);
+        if (res.ParentalContactNo1) setFatherMobile(res.ParentalContactNo1);
+        if (res.ParentalContactNo2) setFatherPhone(res.ParentalContactNo2);
+        if (res.ParentalEmail) setFatherEmail(res.ParentalEmail);
+
+        if (res.AltNameOfFatherGuardian) {
+          setShowAlt1(true);
+          if (res.AltFatherGurdianTitle) setAltTitle1(res.AltFatherGurdianTitle);
+          setAltName1(res.AltNameOfFatherGuardian);
+          if (res.AltParentalAddress) setAltAddress1(res.AltParentalAddress);
+          if (res.AltParentalContactNo1) setAltMobile1(res.AltParentalContactNo1);
+          if (res.AltParentalContactNo2) setAltPhone1(res.AltParentalContactNo2);
+        }
+
+        if (res.AltNameOfFatherGuardian2) {
+          setShowAlt2(true);
+          if (res.AltFatherGurdianTitle2) setAltTitle2(res.AltFatherGurdianTitle2);
+          setAltName2(res.AltNameOfFatherGuardian2);
+          if (res.AltParentalAddress2) setAltAddress2(res.AltParentalAddress2);
+          if (res.AltParental2ContactNo1) setAltMobile2(res.AltParental2ContactNo1);
+          if (res.AltParental2ContactNo2) setAltPhone2(res.AltParental2ContactNo2);
+        }
       }
-    );
-    const data = await response.json();
-    return data.data?.translations?.[0]?.translatedText || text;
-  } catch (error) {
-    console.error("Translation error:", error);
-    return text;
-  }
-};
-
-export default function Step4({ data, setData }) {
-  const [translatingFields, setTranslatingFields] = useState({});
-  const typingTimeoutRef = useRef(null);
-  const scrollViewRef = useRef(null);
-
-  // ---------------------------------------------------------
-  // LOGIC: DEBOUNCED AUTO-TRANSLATE (English to Marathi)
-  // ---------------------------------------------------------
-  const handleMarathiInput = (key) => (val) => {
-    setData((p) => ({ ...p, [key]: val }));
-
-    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-    const englishChars = val.match(/[a-zA-Z]/g);
-
-    if (englishChars && englishChars.length > 0) {
-      const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-      if (englishText.length > 1) {
-        setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-        typingTimeoutRef.current = setTimeout(async () => {
-          try {
-            const translated = await translateText(englishText, "mr");
-            setData((p) => ({ ...p, [key]: translated }));
-          } finally {
-            setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-          }
-        }, 800);
-      }
-    } else {
-      // Pure Marathi filtering
-      const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-      setData((p) => ({ ...p, [key]: filtered }));
+    } catch (err) {
+      console.log("Step 4 load notice:", err.message);
+    } finally {
+      setLoadingInitial(false);
     }
   };
 
-  const handleNumberInput = (key) => (text) => {
-    const numbersOnly = text.replace(/[^0-9]/g, "");
-    setData((p) => ({ ...p, [key]: numbersOnly }));
+  // -------------------------------------------------------------
+  // TRANSLITERATION
+  // -------------------------------------------------------------
+  const transliterateToMarathi = async (text, setter) => {
+    setter(text);
+    if (!text || !text.endsWith(" ")) return;
+
+    const trimmed = text.trim();
+    const words = trimmed.split(/\s+/);
+    const lastWord = words[words.length - 1];
+    if (!lastWord || /^[\u0900-\u097F]+$/.test(lastWord)) return;
+
+    try {
+      const url = `https://inputtools.google.com/request?text=${encodeURIComponent(
+        lastWord
+      )}&itc=mr-t-i0-und&num=1`;
+      const res = await fetch(url);
+      const json = await res.json();
+      if (json?.[0] === "SUCCESS" && json?.[1]?.[0]?.[1]?.[0]) {
+        const marathiWord = json[1][0][1][0];
+        words[words.length - 1] = marathiWord;
+        setter(words.join(" ") + " ");
+      }
+    } catch (e) {
+      // Fallback
+    }
   };
 
-  const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-  // ─── UPDATED KEYBOARD SCROLL HANDLER ───
-  // Scrolls aggressively to the bottom on every focus
-  const handleFieldFocus = () => {
-    // Immediate scroll
-    scrollViewRef.current?.scrollToEnd({ animated: true });
-    
-    // Delayed scrolls to ensure keyboard is fully open
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, 100);
-    
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, 300);
+  // -------------------------------------------------------------
+  // VALIDATION
+  // -------------------------------------------------------------
+  const validateForm = () => {
+    const errs = {};
+    if (!expectations.trim()) {
+      errs.expectations = "Expectations are required (अपेक्षा आवश्यक आहेत)";
+    }
+    if (!fatherName.trim()) {
+      errs.fatherName = "Father / guardian name is required (पालकांचे नाव आवश्यक आहे)";
+    }
+    if (!fatherAddress.trim()) {
+      errs.fatherAddress = "Parental address is required (पालकांचा पत्ता आवश्यक आहे)";
+    }
+    if (!fatherMobile.trim()) {
+      errs.fatherMobile = "Parent mobile is required (पालकांचा मोबाईल नंबर आवश्यक आहे)";
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
   };
 
-  // Helper for spinner
-  const renderIndicator = (key, isLarge = false) => translatingFields[key] && (
-    <View style={{ position: 'absolute', right: 10, top: isLarge ? 35 : '55%' }}>
-      <ActivityIndicator size="small" color="#f97316" />
-    </View>
-  );
+  // -------------------------------------------------------------
+  // SUBMIT (POST /api/registration/SaveExpectationParentDetails)
+  // -------------------------------------------------------------
+  const handleSaveAndContinue = async () => {
+    if (!validateForm()) {
+      Alert.alert("Required Fields", "Please fill in all mandatory fields marked with *.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const effectiveCandidateId = Number(candidateId || currentUser?.CandidateId || 0);
+      const effectiveUserId = Number(currentUser?.UserId || data?.userId || getAuthUserId() || 0);
+
+      const payload = {
+        ActorUserId: effectiveUserId,
+        ActorType: "candidate",
+        ClientStamp: clientStamp || null,
+        CandidateId: effectiveCandidateId,
+        UserId: effectiveUserId,
+        UserLoginId: currentUser?.UserLoginId || currentUser?.Email || "",
+        Expectations: expectations.trim(),
+        FatherGurdianTitle: fatherTitle.trim(),
+        NameOfFatherGuardian: fatherName.trim(),
+        ParentalAddress: fatherAddress.trim(),
+        ParentalContactNo1: fatherMobile.trim(),
+        ParentalContactNo2: fatherPhone.trim(),
+        ParentalEmail: fatherEmail.trim(),
+        AltFatherGurdianTitle: altTitle1.trim(),
+        AltNameOfFatherGuardian: altName1.trim(),
+        AltParentalAddress: altAddress1.trim(),
+        AltParentalContactNo1: altMobile1.trim(),
+        AltParentalContactNo2: altPhone1.trim(),
+        AltParentalEmail: "",
+        AltFatherGurdianTitle2: altTitle2.trim(),
+        AltNameOfFatherGuardian2: altName2.trim(),
+        AltParentalAddress2: altAddress2.trim(),
+        AltParental2ContactNo1: altMobile2.trim(),
+        AltParental2ContactNo2: altPhone2.trim(),
+        AltParentalEmail2: "",
+      };
+
+      const response = await registrationApi.saveExpectationParentDetails(payload);
+
+      if (response?.Success === false) {
+        throw new Error(response?.Message || "Failed to save expectation details.");
+      }
+
+      const newStamp = response?.Data?.ClientStamp || response?.ClientStamp;
+      if (newStamp) setClientStamp(newStamp);
+
+      if (setData) {
+        setData((prev) => ({
+          ...prev,
+          ClientStamp: newStamp || clientStamp || null,
+          expectations,
+          fatherTitle,
+          fatherName,
+          fatherAddress,
+          fatherMobile,
+          fatherPhone,
+          fatherEmail,
+          altTitle1,
+          altName1,
+          altAddress1,
+          altMobile1,
+          altPhone1,
+          altTitle2,
+          altName2,
+          altAddress2,
+          altMobile2,
+          altPhone2,
+        }));
+      }
+
+      Alert.alert(
+        "Success",
+        "अपेक्षा आणि संपर्क माहिती साठवली! (Expectations & Parent Details Saved)",
+        [{ text: "Continue to Step 5", onPress: () => onNext && onNext() }]
+      );
+    } catch (err) {
+      console.error("Save Expectations Error:", err);
+      const msg =
+        err.response?.data?.Message ||
+        err.response?.data?.ErrorMessage ||
+        err.message ||
+        "Could not save details. Please check network connection.";
+      Alert.alert("Save Failed", msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loadingInitial) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color="#831843" />
+        <Text style={styles.loadingText}>Loading saved details...</Text>
+      </View>
+    );
+  }
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
     >
-      <ScrollView 
-        ref={scrollViewRef}
-        showsVerticalScrollIndicator={false} 
-        // INCREASED PADDING BOTTOM TO 300 FOR EXTRA SCROLL ROOM
-        contentContainerStyle={{ paddingBottom: 300 }}
+      <ScrollView
+        contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
-        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
       >
-        <SectionHeader title="जोडीदाराविषयी अपेक्षा" />
-        
-        {/* MARATHI EXPECTATIONS */}
-        <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-          <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-            (छंद/गुण/स्वभाव/वांछनीय शेरे) <Text style={{ color: "red" }}>*</Text>
-          </Text>
-          <TextInput
-            style={[styles.marathiPad, { height: 90 }, translatingFields.expectations && { opacity: 0.6 }]}
-            multiline
-            placeholder="येथे अपेक्षा लिहा (English type for Marathi)..."
-            placeholderTextColor="#bbb"
-            value={data.expectations}
-            onChangeText={handleMarathiInput("expectations")}
-            onFocus={handleFieldFocus}
-          />
-          {renderIndicator("expectations", true)}
-          <Text style={styles.hint}>उदा: हुशार, अनुरूप, इंजिनीअर, डॉक्टर इ.</Text>
-        </View>
-
-        <SectionHeader title="Father's / Parents Details" />
-        <View style={styles.row3}>
-          <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-            <Field 
-              label="Title" 
-              required 
-              value={data.fatherTitle} 
-              onChangeText={handleMarathiInput("fatherTitle")} 
-              placeholder="श्री"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("fatherTitle")}
-          </View>
-          <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-            <Field 
-              label="वडिलांचे / पालकांचे नाव" 
-              required 
-              value={data.fatherName} 
-              onChangeText={handleMarathiInput("fatherName")} 
-              placeholder="नाव"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("fatherName")}
-          </View>
-          <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-            <Field 
-              label="पत्ता" 
-              required 
-              value={data.fatherAddress} 
-              onChangeText={handleMarathiInput("fatherAddress")} 
-              placeholder="शहर/गाव"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("fatherAddress")}
+        {/* Banner */}
+        <View style={styles.banner}>
+          <View style={styles.bannerTopRow}>
+            <View style={styles.bannerTitleRow}>
+              <Ionicons name="heart-outline" size={24} color="#FFFFFF" />
+              <View style={{ marginLeft: 8 }}>
+                <Text style={styles.bannerTitle}>
+                  Expectations & Parents (अपेक्षा आणि पालक माहिती)
+                </Text>
+                <Text style={styles.bannerSub}>
+                  Application No: <Text style={styles.boldWhite}>{applicationNo}</Text>
+                </Text>
+              </View>
+            </View>
+            <View style={styles.stepBadge}>
+              <Text style={styles.stepBadgeText}>STEP 4 / 5</Text>
+            </View>
           </View>
         </View>
 
-        <View style={styles.row3}>
-          <View style={{ flex: 1, marginRight: 6 }}>
-            <Field 
-              label="दूरध्वनी" 
-              value={data.fatherPhone} 
-              onChangeText={handleNumberInput("fatherPhone")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
-            />
+        {/* ── SECTION 1: PARTNER EXPECTATIONS ── */}
+        <View style={[styles.sectionCard, styles.roseBorder]}>
+          <View style={[styles.sectionCardHeader, styles.roseHeader]}>
+            <Ionicons name="heart" size={18} color="#BE185D" />
+            <Text style={[styles.sectionHeading, { color: "#BE185D" }]}>
+              Partner Expectations (जोडीदाराविषयी अपेक्षा) <Text style={styles.required}>*</Text>
+            </Text>
           </View>
-          <View style={{ flex: 1, marginHorizontal: 3 }}>
-            <Field 
-              label="मोबाईल" 
-              required 
-              value={data.fatherMobile} 
-              onChangeText={handleNumberInput("fatherMobile")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
+
+          <View style={styles.sectionBody}>
+            <Text style={styles.label}>
+              Expectations (छंद / गुण / स्वभाव / अनुरूप शेरे) <Text style={styles.required}>*</Text>
+            </Text>
+            <TextInput
+              style={[styles.textArea, errors.expectations && styles.inputError]}
+              placeholder="उदा. सुशिक्षित, अनुरूप, नोकरी करणारी/करणारा, शाकाहारी, निर्व्यसनी..."
+              placeholderTextColor="#9CA3AF"
+              multiline
+              numberOfLines={4}
+              value={expectations}
+              onChangeText={(val) => transliterateToMarathi(val, setExpectations)}
             />
-          </View>
-          <View style={{ flex: 1, marginLeft: 6 }}>
-            <Field 
-              label="Email" 
-              value={data.fatherEmail} 
-              onChangeText={set("fatherEmail")} 
-              keyboardType="email-address"
-              onFocus={handleFieldFocus}
-            />
+            {errors.expectations && <Text style={styles.errorText}>{errors.expectations}</Text>}
+            <Text style={styles.hintText}>
+              टीप: येथे इंग्रजीत टाइप करून स्पेस दाबा, आपोआप मराठीत होईल.
+            </Text>
           </View>
         </View>
 
-        <SectionHeader title="संपर्कासाठी नाव व पत्ता १" />
-        <View style={styles.row3}>
-          <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-            <Field 
-              label="Title" 
-              value={data.contact1Title} 
-              onChangeText={handleMarathiInput("contact1Title")} 
-              placeholder="श्री"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact1Title")}
+        {/* ── SECTION 2: FATHER / GUARDIAN DETAILS ── */}
+        <View style={[styles.sectionCard, styles.purpleBorder]}>
+          <View style={[styles.sectionCardHeader, styles.purpleHeader]}>
+            <Ionicons name="people-outline" size={18} color="#6D28D9" />
+            <Text style={[styles.sectionHeading, { color: "#6D28D9" }]}>
+              Father's / Guardian's Details (वडिलांची / पालकांची माहिती)
+            </Text>
           </View>
-          <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-            <Field 
-              label="संपर्काचे नाव" 
-              value={data.contact1Name} 
-              onChangeText={handleMarathiInput("contact1Name")} 
-              placeholder="नाव"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact1Name")}
-          </View>
-          <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-            <Field 
-              label="पत्ता" 
-              value={data.contact1Address} 
-              onChangeText={handleMarathiInput("contact1Address")} 
-              placeholder="पत्ता"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact1Address")}
+
+          <View style={styles.sectionBody}>
+            {/* Title & Name */}
+            <Text style={styles.label}>
+              Father's / Guardian's Full Name (पालकांचे संपूर्ण नाव){" "}
+              <Text style={styles.required}>*</Text>
+            </Text>
+            <View style={styles.rowTitleAndName}>
+              <View style={styles.titleWrap}>
+                <View style={styles.titleSelectorRow}>
+                  {TITLES.map((t) => (
+                    <TouchableOpacity
+                      key={t}
+                      style={[styles.titleChip, fatherTitle === t && styles.titleChipActive]}
+                      onPress={() => setFatherTitle(t)}
+                    >
+                      <Text
+                        style={[
+                          styles.titleChipText,
+                          fatherTitle === t && styles.titleChipTextActive,
+                        ]}
+                      >
+                        {t}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+
+              <View style={{ flex: 1, marginLeft: 8 }}>
+                <TextInput
+                  style={[styles.input, errors.fatherName && styles.inputError]}
+                  placeholder="उदा. सुरेश उत्तम पाटील"
+                  placeholderTextColor="#9CA3AF"
+                  value={fatherName}
+                  onChangeText={(val) => transliterateToMarathi(val, setFatherName)}
+                  returnKeyType="next"
+                  onSubmitEditing={() => fatherAddressRef.current?.focus()}
+                />
+              </View>
+            </View>
+            {errors.fatherName && <Text style={styles.errorText}>{errors.fatherName}</Text>}
+
+            {/* Address */}
+            <View style={[styles.inputGroup, { marginTop: 12 }]}>
+              <Text style={styles.label}>
+                Parental Address (पालकांचा कायमचा पत्ता) <Text style={styles.required}>*</Text>
+              </Text>
+              <TextInput
+                ref={fatherAddressRef}
+                style={[styles.textArea, { minHeight: 65 }, errors.fatherAddress && styles.inputError]}
+                placeholder="उदा. फ्लॅट नं. ४, समर्थ कृपा अपार्टमेंट, निगडी, पुणे ४११०४४"
+                placeholderTextColor="#9CA3AF"
+                multiline
+                value={fatherAddress}
+                onChangeText={(val) => transliterateToMarathi(val, setFatherAddress)}
+              />
+              {errors.fatherAddress && <Text style={styles.errorText}>{errors.fatherAddress}</Text>}
+            </View>
+
+            {/* Mobile & Phone */}
+            <View style={styles.row2}>
+              <View style={{ flex: 1, marginRight: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>
+                    Mobile (मोबाईल) <Text style={styles.required}>*</Text>
+                  </Text>
+                  <TextInput
+                    ref={fatherMobileRef}
+                    style={[styles.input, errors.fatherMobile && styles.inputError]}
+                    placeholder="10-digit mobile"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    maxLength={10}
+                    value={fatherMobile}
+                    onChangeText={(v) => {
+                      setFatherMobile(v);
+                      if (errors.fatherMobile) setErrors((p) => ({ ...p, fatherMobile: null }));
+                    }}
+                    returnKeyType="next"
+                    onSubmitEditing={() => fatherPhoneRef.current?.focus()}
+                  />
+                  {errors.fatherMobile && (
+                    <Text style={styles.errorText}>{errors.fatherMobile}</Text>
+                  )}
+                </View>
+              </View>
+
+              <View style={{ flex: 1, marginLeft: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Landline (दूरध्वनी)</Text>
+                  <TextInput
+                    ref={fatherPhoneRef}
+                    style={styles.input}
+                    placeholder="STD Phone"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={fatherPhone}
+                    onChangeText={setFatherPhone}
+                    returnKeyType="next"
+                    onSubmitEditing={() => fatherEmailRef.current?.focus()}
+                  />
+                </View>
+              </View>
+            </View>
+
+            {/* Email */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Email (पालकांचा ईमेल - पर्यायी)</Text>
+              <TextInput
+                ref={fatherEmailRef}
+                style={styles.input}
+                placeholder="example@gmail.com"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={fatherEmail}
+                onChangeText={setFatherEmail}
+                returnKeyType="done"
+              />
+            </View>
           </View>
         </View>
 
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8 }}>
-            <Field 
-              label="दूरध्वनी" 
-              value={data.contact1Phone} 
-              onChangeText={handleNumberInput("contact1Phone")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
-            />
-          </View>
-          <View style={{ flex: 1, marginLeft: 8 }}>
-            <Field 
-              label="मोबाईल" 
-              value={data.contact1Mobile} 
-              onChangeText={handleNumberInput("contact1Mobile")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
-            />
-          </View>
+        {/* ── SECTION 3: ALTERNATE CONTACT 1 ── */}
+        <View style={[styles.sectionCard, styles.amberBorder]}>
+          <TouchableOpacity
+            style={[styles.sectionCardHeader, styles.amberHeader, { justifyContent: "space-between" }]}
+            onPress={() => setShowAlt1(!showAlt1)}
+            activeOpacity={0.8}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="call-outline" size={18} color="#D97706" />
+              <Text style={[styles.sectionHeading, { color: "#B45309" }]}>
+                Alternate Contact 1 (पर्यायी संपर्क १ - नातेवाईक)
+              </Text>
+            </View>
+            <Ionicons name={showAlt1 ? "chevron-up" : "chevron-down"} size={20} color="#B45309" />
+          </TouchableOpacity>
+
+          {showAlt1 && (
+            <View style={styles.sectionBody}>
+              <View style={styles.row2}>
+                <View style={{ width: 70, marginRight: 8 }}>
+                  <Text style={styles.label}>Title</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={altTitle1}
+                    onChangeText={setAltTitle1}
+                    placeholder="श्री"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.label}>Contact Person Name (संपर्काचे नाव)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="उदा. काका / मामा यांचे नाव"
+                    placeholderTextColor="#9CA3AF"
+                    value={altName1}
+                    onChangeText={(val) => transliterateToMarathi(val, setAltName1)}
+                  />
+                </View>
+              </View>
+
+              <View style={[styles.inputGroup, { marginTop: 10 }]}>
+                <Text style={styles.label}>Address (पत्ता)</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="पत्ता / शहर"
+                  placeholderTextColor="#9CA3AF"
+                  value={altAddress1}
+                  onChangeText={(val) => transliterateToMarathi(val, setAltAddress1)}
+                />
+              </View>
+
+              <View style={styles.row2}>
+                <View style={{ flex: 1, marginRight: 8 }}>
+                  <Text style={styles.label}>Mobile (मोबाईल)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Mobile"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={altMobile1}
+                    onChangeText={setAltMobile1}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 8 }}>
+                  <Text style={styles.label}>Phone (दूरध्वनी)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Phone"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={altPhone1}
+                    onChangeText={setAltPhone1}
+                  />
+                </View>
+              </View>
+            </View>
+          )}
         </View>
 
-        <SectionHeader title="संपर्कासाठी नाव व पत्ता २" />
-        <View style={styles.row3}>
-          <View style={{ flex: 0.6, marginRight: 6, position: 'relative' }}>
-            <Field 
-              label="Title" 
-              value={data.contact2Title} 
-              onChangeText={handleMarathiInput("contact2Title")} 
-              placeholder="श्री"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact2Title")}
-          </View>
-          <View style={{ flex: 1.4, marginHorizontal: 3, position: 'relative' }}>
-            <Field 
-              label="संपर्काचे नाव" 
-              value={data.contact2Name} 
-              onChangeText={handleMarathiInput("contact2Name")} 
-              placeholder="नाव"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact2Name")}
-          </View>
-          <View style={{ flex: 0.8, marginLeft: 6, position: 'relative' }}>
-            <Field 
-              label="पत्ता" 
-              value={data.contact2Address} 
-              onChangeText={handleMarathiInput("contact2Address")} 
-              placeholder="पत्ता"
-              onFocus={handleFieldFocus}
-            />
-            {renderIndicator("contact2Address")}
-          </View>
+        {/* ── SECTION 4: ALTERNATE CONTACT 2 ── */}
+        <View style={[styles.sectionCard, styles.amberBorder]}>
+          <TouchableOpacity
+            style={[styles.sectionCardHeader, styles.amberHeader, { justifyContent: "space-between" }]}
+            onPress={() => setShowAlt2(!showAlt2)}
+            activeOpacity={0.8}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="call-outline" size={18} color="#D97706" />
+              <Text style={[styles.sectionHeading, { color: "#B45309" }]}>
+                Alternate Contact 2 (पर्यायी संपर्क २ - ऐच्छिक)
+              </Text>
+            </View>
+            <Ionicons name={showAlt2 ? "chevron-up" : "chevron-down"} size={20} color="#B45309" />
+          </TouchableOpacity>
+
+          {showAlt2 && (
+            <View style={styles.sectionBody}>
+              <View style={styles.row2}>
+                <View style={{ width: 70, marginRight: 8 }}>
+                  <Text style={styles.label}>Title</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={altTitle2}
+                    onChangeText={setAltTitle2}
+                    placeholder="श्री"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.label}>Contact Person Name (संपर्काचे नाव)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="नातेवाईक / मित्र यांचे नाव"
+                    placeholderTextColor="#9CA3AF"
+                    value={altName2}
+                    onChangeText={(val) => transliterateToMarathi(val, setAltName2)}
+                  />
+                </View>
+              </View>
+
+              <View style={[styles.inputGroup, { marginTop: 10 }]}>
+                <Text style={styles.label}>Address (पत्ता)</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="पत्ता / शहर"
+                  placeholderTextColor="#9CA3AF"
+                  value={altAddress2}
+                  onChangeText={(val) => transliterateToMarathi(val, setAltAddress2)}
+                />
+              </View>
+
+              <View style={styles.row2}>
+                <View style={{ flex: 1, marginRight: 8 }}>
+                  <Text style={styles.label}>Mobile (मोबाईल)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Mobile"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={altMobile2}
+                    onChangeText={setAltMobile2}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 8 }}>
+                  <Text style={styles.label}>Phone (दूरध्वनी)</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Phone"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={altPhone2}
+                    onChangeText={setAltPhone2}
+                  />
+                </View>
+              </View>
+            </View>
+          )}
         </View>
 
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8 }}>
-            <Field 
-              label="दूरध्वनी" 
-              value={data.contact2Phone} 
-              onChangeText={handleNumberInput("contact2Phone")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
-            />
-          </View>
-          <View style={{ flex: 1, marginLeft: 8 }}>
-            <Field 
-              label="मोबाईल" 
-              value={data.contact2Mobile} 
-              onChangeText={handleNumberInput("contact2Mobile")} 
-              keyboardType="phone-pad"
-              onFocus={handleFieldFocus}
-            />
-          </View>
-        </View>
+        {/* ── ACTION BUTTONS ── */}
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => onBack && onBack()}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="arrow-back" size={18} color="#475569" />
+            <Text style={styles.backBtnText}>Back (मागे)</Text>
+          </TouchableOpacity>
 
-        <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-          <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-          <TextInput 
-            style={[styles.marathiPad, translatingFields.extraMarathiNotes && { opacity: 0.6 }]} 
-            multiline 
-            placeholder="येथे मराठीत टाइप करा..." 
-            placeholderTextColor="#bbb"
-            value={data.extraMarathiNotes || ""}
-            onChangeText={handleMarathiInput("extraMarathiNotes")}
-            onFocus={handleFieldFocus}
-          />
-          {renderIndicator("extraMarathiNotes", true)}
+          <TouchableOpacity
+            style={[styles.continueBtn, saving && styles.continueBtnDisabled]}
+            onPress={handleSaveAndContinue}
+            disabled={saving}
+            activeOpacity={0.85}
+          >
+            {saving ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <View style={styles.continueBtnContent}>
+                <Text style={styles.continueBtnText}>Review & Continue to Step 5</Text>
+                <Ionicons
+                  name="arrow-forward-circle"
+                  size={20}
+                  color="#FFFFFF"
+                  style={{ marginLeft: 6 }}
+                />
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 14,
+    backgroundColor: "#F8FAFC",
+    flexGrow: 1,
+    paddingBottom: 36,
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#F8FAFC",
+  },
+  loadingText: {
+    marginTop: 10,
+    color: "#64748B",
+    fontSize: 13,
+  },
+  banner: {
+    backgroundColor: "#831843",
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 14,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  bannerTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  bannerTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  bannerTitle: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  bannerSub: {
+    color: "#FCE7F3",
+    fontSize: 11,
+    marginTop: 2,
+  },
+  boldWhite: {
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+  stepBadge: {
+    backgroundColor: "#BE185D",
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  stepBadgeText: {
+    color: "#FFFFFF",
+    fontSize: 10.5,
+    fontWeight: "800",
+  },
+  sectionCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    marginBottom: 14,
+    overflow: "hidden",
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+  },
+  purpleBorder: { borderColor: "#DDD6FE" },
+  purpleHeader: { backgroundColor: "#F5F3FF" },
+  roseBorder: { borderColor: "#FBCFE8" },
+  roseHeader: { backgroundColor: "#FDF2F8" },
+  amberBorder: { borderColor: "#FDE68A" },
+  amberHeader: { backgroundColor: "#FFFBEB" },
+  sectionCardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F1F5F9",
+  },
+  sectionHeading: {
+    fontSize: 13.5,
+    fontWeight: "700",
+    marginLeft: 6,
+  },
+  sectionBody: {
+    padding: 14,
+  },
+  inputGroup: {
+    marginBottom: 12,
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#334155",
+    marginBottom: 4,
+  },
+  required: {
+    color: "#EF4444",
+  },
+  input: {
+    height: 42,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 7,
+    paddingHorizontal: 12,
+    fontSize: 13.5,
+    color: "#0F172A",
+    backgroundColor: "#FFFFFF",
+  },
+  textArea: {
+    minHeight: 80,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 7,
+    padding: 10,
+    fontSize: 13.5,
+    color: "#0F172A",
+    backgroundColor: "#FFFFFF",
+    textAlignVertical: "top",
+  },
+  inputError: {
+    borderColor: "#EF4444",
+    backgroundColor: "#FEF2F2",
+  },
+  errorText: {
+    fontSize: 11,
+    color: "#EF4444",
+    marginTop: 3,
+  },
+  hintText: {
+    fontSize: 10.5,
+    color: "#64748B",
+    marginTop: 3,
+  },
+  rowTitleAndName: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  titleWrap: {
+    width: 140,
+  },
+  titleSelectorRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 4,
+  },
+  titleChip: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 5,
+    backgroundColor: "#F1F5F9",
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+  },
+  titleChipActive: {
+    backgroundColor: "#831843",
+    borderColor: "#831843",
+  },
+  titleChipText: {
+    fontSize: 11,
+    color: "#334155",
+    fontWeight: "700",
+  },
+  titleChipTextActive: {
+    color: "#FFFFFF",
+  },
+  row2: {
+    flexDirection: "row",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 6,
+  },
+  backBtn: {
+    flex: 0.35,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+    flexDirection: "row",
+    gap: 4,
+  },
+  backBtnText: {
+    fontSize: 13.5,
+    fontWeight: "700",
+    color: "#475569",
+  },
+  continueBtn: {
+    flex: 0.65,
+    backgroundColor: "#831843",
+    height: 50,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  continueBtnDisabled: {
+    opacity: 0.65,
+  },
+  continueBtnContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  continueBtnText: {
+    color: "#FFFFFF",
+    fontSize: 13.5,
+    fontWeight: "700",
+  },
+});

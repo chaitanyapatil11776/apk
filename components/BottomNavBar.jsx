@@ -3,9 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 const NAV_ITEMS = [
-  { name: "Menu",    label: "Menu",    icon: "☰"  },
-  { name: "Account", label: "Account", icon: "📋" },
-  { name: "Profile", label: "Profile", icon: "👤" },
+  { name: "Dashboard", label: "Dashboard", icon: "📊" },
+  { name: "Menu",      label: "Menu",      icon: "☰"  },
+  { name: "Profile",   label: "Profile",   icon: "👤" },
+  { name: "Account",   label: "Account",   icon: "📋" },
 ];
 
 export default function BottomNavBar() {

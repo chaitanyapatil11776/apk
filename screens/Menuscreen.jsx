@@ -162,12 +162,13 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import BottomNavBar from "../components/BottomNavBar";
 
 const MENU_ITEMS = [
-  { icon: "📅", title: "edit profile",  subtitle: "Book your event slot",       bg: "#fff3ec", border: "#f97316", screen: "SuchiBooking" },
-  { icon: "ℹ️",  title: "About Us",       subtitle: "Know about us",              bg: "#ecf9f1", border: "#16a34a", screen: null           },
-  { icon: "📞", title: "Contact Us",     subtitle: "Reach out to us",            bg: "#ecf0ff", border: "#4f46e5", screen: null           },
-  { icon: "❓", title: "FAQ",            subtitle: "Frequently asked questions", bg: "#fef9ec", border: "#ca8a04", screen: null           },
-  { icon: "👤", title: "My Profile",     subtitle: "View & edit your profile",   bg: "#fce4ff", border: "#a21caf", screen: "Profile"      },
-  { icon: "📋", title: "My Account",     subtitle: "Bookings & payments",        bg: "#e4f0ff", border: "#2563eb", screen: "Account"      },
+  { icon: "📊", title: "Dashboard",     subtitle: "Application status & summary", bg: "#fce7f3", border: "#831843", screen: "Dashboard"   },
+  { icon: "📅", title: "Suchi Booking", subtitle: "Matrimonial profile wizard",   bg: "#fff3ec", border: "#f97316", screen: "SuchiBooking" },
+  { icon: "👤", title: "My Profile",     subtitle: "View & edit your profile",    bg: "#fce4ff", border: "#a21caf", screen: "Profile"      },
+  { icon: "📋", title: "My Account",     subtitle: "Bookings & payments",         bg: "#e4f0ff", border: "#2563eb", screen: "Account"      },
+  { icon: "ℹ️",  title: "About Us",       subtitle: "Know about Samata Mandal",    bg: "#ecf9f1", border: "#16a34a", screen: null           },
+  { icon: "📞", title: "Contact Us",     subtitle: "Reach out to Mandal office",   bg: "#ecf0ff", border: "#4f46e5", screen: null           },
+  { icon: "❓", title: "FAQ",            subtitle: "Frequently asked questions",  bg: "#fef9ec", border: "#ca8a04", screen: null           },
 ];
 
 export default function MenuScreen() {

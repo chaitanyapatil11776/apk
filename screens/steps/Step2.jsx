@@ -1,1777 +1,705 @@
-// // // // // import React from "react";
-// // // // // import { View, Text, ScrollView, TextInput } from "react-native";
-// // // // // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // // // export default function Step2({ data, setData }) {
-// // // // //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-  
-// // // // //   return (
-// // // // //     <ScrollView showsVerticalScrollIndicator={false}>
-// // // // //       <SectionHeader title="Personal Information" />
-
-// // // // //       <View style={styles.row3}>
-// // // // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // // // //           <Field label="जन्म तारीख" required value={data.dob} onChangeText={set("dob")} placeholder="DD/MM/YYYY" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // // // //           <Field label="तास" value={data.birthHour} onChangeText={set("birthHour")} placeholder="--" keyboardType="numeric" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // // //           <Field label="मिनिटे" value={data.birthMin} onChangeText={set("birthMin")} placeholder="00" keyboardType="numeric" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <View style={styles.row3}>
-// // // // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // // // //           <Field label="जन्मस्थळ" required value={data.birthPlace} onChangeText={set("birthPlace")} placeholder="जन्मस्थळ" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // // // //           <Field label="ऊंची फुट" required value={data.heightFt} onChangeText={set("heightFt")} placeholder="00" keyboardType="numeric" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // // //           <Field label="इंच" value={data.heightIn} onChangeText={set("heightIn")} placeholder="00" keyboardType="numeric" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <View style={styles.row2}>
-// // // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // // //           <Field label="वर्ण" required value={data.complexion} onChangeText={set("complexion")} placeholder="गोरा" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // // //           <Field label="रक्तगट" required value={data.bloodGroup} onChangeText={set("bloodGroup")} placeholder="--" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <View style={styles.row2}>
-// // // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // // //           <Field label="मामकुळ" required value={data.mamkul} onChangeText={set("mamkul")} placeholder="मामकुळ" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // // //           <Field label="गोत्र" required value={data.gotra} onChangeText={set("gotra")} placeholder="--" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <View style={styles.row3}>
-// // // // //         <View style={{ flex: 1, marginRight: 6 }}>
-// // // // //           <Field label="मूळगाव" required value={data.village} onChangeText={set("village")} placeholder="मूळगाव" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// // // // //           <Field label="तालुका" required value={data.taluka} onChangeText={set("taluka")} placeholder="तालुका" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginLeft: 6 }}>
-// // // // //           <Field label="जिल्हा" required value={data.district} onChangeText={set("district")} placeholder="जिल्हा" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // // // //       <View style={styles.row2}>
-// // // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // // //           <Field label="विवाहित" value={data.brotherMarried} onChangeText={set("brotherMarried")} keyboardType="numeric" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // // //           <Field label="अविवाहित" value={data.brotherUnmarried} onChangeText={set("brotherUnmarried")} keyboardType="numeric" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // // // //       <View style={styles.row2}>
-// // // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // // //           <Field label="विवाहित" value={data.sisterMarried} onChangeText={set("sisterMarried")} keyboardType="numeric" />
-// // // // //         </View>
-// // // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // // //           <Field label="अविवाहित" value={data.sisterUnmarried} onChangeText={set("sisterUnmarried")} keyboardType="numeric" />
-// // // // //         </View>
-// // // // //       </View>
-
-// // // // //       <Field label="वैयक्तिक मोबाइल नंबर" value={data.mobile} onChangeText={set("mobile")} keyboardType="phone-pad" placeholder="+91" />
-
-// // // // //       <View style={styles.marathiPadWrap}>
-// // // // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>Marathi Type Pad</Text>
-// // // // //         <TextInput style={styles.marathiPad} multiline placeholder="Type in Marathi..." placeholderTextColor="#bbb" />
-// // // // //       </View>
-// // // // //     </ScrollView>
-// // // // //   );
-// // // // // }
-
-
-
-
-// // // // // // z.ai
-// // // // import React from "react";
-// // // // import { View, Text, ScrollView, TextInput } from "react-native";
-// // // // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // // export default function Step2({ data, setData }) {
-
-// // // //   // ---------------------------------------------------------
-// // // //   // LOGIC 1: ENGLISH ONLY
-// // // //   // Removes any character that is NOT A-Z, a-z, 0-9, or space
-// // // //   // ---------------------------------------------------------
-// // // //   const handleEnglishInput = (key) => (text) => {
-// // // //     const englishOnly = text.replace(/[^a-zA-Z0-9\s]/g, "");
-// // // //     setData((p) => ({ ...p, [key]: englishOnly }));
-// // // //   };
-
-// // // //   // ---------------------------------------------------------
-// // // //   // LOGIC 2: MARATHI ONLY
-// // // //   // Removes any character that is NOT in the Marathi Unicode range
-// // // //   // ---------------------------------------------------------
-// // // //   const handleMarathiInput = (key) => (text) => {
-// // // //     // \u0900-\u097F covers Devanagari script (Marathi)
-// // // //     const marathiOnly = text.replace(/[^\u0900-\u097F\s]/g, "");
-// // // //     setData((p) => ({ ...p, [key]: marathiOnly }));
-// // // //   };
-
-// // // //   // Helper for Numbers Only
-// // // //   const handleNumberInput = (key) => (text) => {
-// // // //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// // // //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// // // //   };
-
-// // // //   // Generic setter for mixed/standard fields
-// // // //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-// // // //   return (
-// // // //     <ScrollView showsVerticalScrollIndicator={false}>
-// // // //       <SectionHeader title="Personal Information" />
-
-// // // //       {/* DATE ROW */}
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // // //           <Field
-// // // //             label="जन्म तारीख"
-// // // //             required
-// // // //             value={data.dob}
-// // // //             onChangeText={set("dob")}
-// // // //             placeholder="DD/MM/YYYY"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // // //           <Field
-// // // //             label="तास"
-// // // //             value={data.birthHour}
-// // // //             onChangeText={handleNumberInput("birthHour")}
-// // // //             placeholder="--"
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // //           <Field
-// // // //             label="मिनिटे"
-// // // //             value={data.birthMin}
-// // // //             onChangeText={handleNumberInput("birthMin")}
-// // // //             placeholder="00"
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* ENGLISH ONLY SECTION: Birth Place */}
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // // //           <Field
-// // // //             label="जन्मस्थळ"
-// // // //             required
-// // // //             value={data.birthPlace}
-// // // //             onChangeText={handleEnglishInput("birthPlace")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // // //           <Field
-// // // //             label="ऊंची फुट"
-// // // //             required
-// // // //             value={data.heightFt}
-// // // //             onChangeText={handleNumberInput("heightFt")}
-// // // //             placeholder="00"
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // // //           <Field
-// // // //             label="इंच"
-// // // //             value={data.heightIn}
-// // // //             onChangeText={handleNumberInput("heightIn")}
-// // // //             placeholder="00"
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* ENGLISH ONLY SECTION: Complexion, Blood Group */}
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field
-// // // //             label="वर्ण"
-// // // //             required
-// // // //             value={data.complexion}
-// // // //             onChangeText={handleEnglishInput("complexion")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field
-// // // //             label="रक्तगट"
-// // // //             required
-// // // //             value={data.bloodGroup}
-// // // //             onChangeText={handleEnglishInput("bloodGroup")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* ENGLISH ONLY SECTION: Mamkul, Gotra */}
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field
-// // // //             label="मामकुळ"
-// // // //             required
-// // // //             value={data.mamkul}
-// // // //             onChangeText={handleEnglishInput("mamkul")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field
-// // // //             label="गोत्र"
-// // // //             required
-// // // //             value={data.gotra}
-// // // //             onChangeText={handleEnglishInput("gotra")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* ENGLISH ONLY SECTION: Address Details */}
-// // // //       <View style={styles.row3}>
-// // // //         <View style={{ flex: 1, marginRight: 6 }}>
-// // // //           <Field
-// // // //             label="मूळगाव"
-// // // //             required
-// // // //             value={data.village}
-// // // //             onChangeText={handleEnglishInput("village")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// // // //           <Field
-// // // //             label="तालुका"
-// // // //             required
-// // // //             value={data.taluka}
-// // // //             onChangeText={handleEnglishInput("taluka")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 6 }}>
-// // // //           <Field
-// // // //             label="जिल्हा"
-// // // //             required
-// // // //             value={data.district}
-// // // //             onChangeText={handleEnglishInput("district")}
-// // // //             placeholder="English Text Only"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* NUMBER ONLY SECTION: Brothers */}
-// // // //       <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field
-// // // //             label="विवाहित"
-// // // //             value={data.brotherMarried}
-// // // //             onChangeText={handleNumberInput("brotherMarried")}
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field
-// // // //             label="अविवाहित"
-// // // //             value={data.brotherUnmarried}
-// // // //             onChangeText={handleNumberInput("brotherUnmarried")}
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* NUMBER ONLY SECTION: Sisters */}
-// // // //       <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // // //       <View style={styles.row2}>
-// // // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // // //           <Field
-// // // //             label="विवाहित"
-// // // //             value={data.sisterMarried}
-// // // //             onChangeText={handleNumberInput("sisterMarried")}
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // // //           <Field
-// // // //             label="अविवाहित"
-// // // //             value={data.sisterUnmarried}
-// // // //             onChangeText={handleNumberInput("sisterUnmarried")}
-// // // //             keyboardType="numeric"
-// // // //           />
-// // // //         </View>
-// // // //       </View>
-
-// // // //       {/* NUMBER ONLY SECTION: Mobile */}
-// // // //       <Field
-// // // //         label="वैयक्तिक मोबाइल नंबर"
-// // // //         value={data.mobile}
-// // // //         onChangeText={handleNumberInput("mobile")}
-// // // //         keyboardType="phone-pad"
-// // // //         placeholder="+91"
-// // // //       />
-
-// // // //       {/* MARATHI ONLY SECTION: Notes Pad */}
-// // // //       <View style={styles.marathiPadWrap}>
-// // // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// // // //           Marathi Type Pad (Marathi Only)
-// // // //         </Text>
-// // // //         <TextInput
-// // // //           style={styles.marathiPad}
-// // // //           multiline
-// // // //           placeholder="Type in Marathi..."
-// // // //           placeholderTextColor="#bbb"
-// // // //           value={data.marathiNotes || ""}
-// // // //           onChangeText={handleMarathiInput("marathiNotes")}
-// // // //         />
-// // // //       </View>
-// // // //     </ScrollView>
-// // // //   );
-// // // // }
-
-
-
-
-
-
-// // // import React from "react";
-// // // import { View, Text, ScrollView, TextInput } from "react-native";
-// // // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // export default function Step2({ data, setData }) {
-
-// // //   // ---------------------------------------------------------
-// // //   // LOGIC: MARATHI ONLY (Strict)
-// // //   // Blocks English characters (a-z, A-Z).
-// // //   // Allows Marathi (Devanagari), Numbers, Space, and Punctuation.
-// // //   // ---------------------------------------------------------
-// // //   const handleMarathiInput = (key) => (text) => {
-// // //     // Regex explained:
-// // //     // [^...] means "not these characters"
-// // //     // \u0900-\u097F is the Marathi (Devanagari) Unicode block
-// // //     // 0-9 allows numbers
-// // //     // \s allows spaces
-// // //     // .,?! allows basic punctuation
-// // //     const marathiOnly = text.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-// // //     setData((p) => ({ ...p, [key]: marathiOnly }));
-// // //   };
-
-// // //   // Helper for Numbers Only
-// // //   const handleNumberInput = (key) => (text) => {
-// // //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// // //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// // //   };
-
-// // //   // Generic setter (used for dates or un-validated fields)
-// // //   const set = (key) => (val) => setData((p) => ({ ...p, [key]: val }));
-
-// // //   return (
-// // //     <ScrollView showsVerticalScrollIndicator={false}>
-// // //       <SectionHeader title="Personal Information" />
-
-// // //       {/* DATE ROW */}
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // //           <Field
-// // //             label="जन्म तारीख"
-// // //             required
-// // //             value={data.dob}
-// // //             onChangeText={set("dob")}
-// // //             placeholder="DD/MM/YYYY"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // //           <Field
-// // //             label="तास"
-// // //             value={data.birthHour}
-// // //             onChangeText={handleNumberInput("birthHour")}
-// // //             placeholder="--"
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // //           <Field
-// // //             label="मिनिटे"
-// // //             value={data.birthMin}
-// // //             onChangeText={handleNumberInput("birthMin")}
-// // //             placeholder="00"
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       {/* MARATHI ONLY FIELDS */}
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// // //           <Field
-// // //             label="जन्मस्थळ"
-// // //             required
-// // //             value={data.birthPlace}
-// // //             onChangeText={handleMarathiInput("birthPlace")}
-// // //             placeholder="फक्त मराठी मजकूर"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// // //           <Field
-// // //             label="ऊंची फुट"
-// // //             required
-// // //             value={data.heightFt}
-// // //             onChangeText={handleNumberInput("heightFt")}
-// // //             placeholder="00"
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// // //           <Field
-// // //             label="इंच"
-// // //             value={data.heightIn}
-// // //             onChangeText={handleNumberInput("heightIn")}
-// // //             placeholder="00"
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field
-// // //             label="वर्ण"
-// // //             required
-// // //             value={data.complexion}
-// // //             onChangeText={handleMarathiInput("complexion")}
-// // //             placeholder="फक्त मराठी मजकूर"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field
-// // //             label="रक्तगट"
-// // //             required
-// // //             value={data.bloodGroup}
-// // //             onChangeText={handleMarathiInput("bloodGroup")}
-// // //             placeholder="उदा. ए पॉझिटिव्ह"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field
-// // //             label="मामकुल"
-// // //             required
-// // //             value={data.mamkul}
-// // //             onChangeText={handleMarathiInput("mamkul")}
-// // //             placeholder="फक्त मराठी मजकूर"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field
-// // //             label="गोत्र"
-// // //             required
-// // //             value={data.gotra}
-// // //             onChangeText={handleMarathiInput("gotra")}
-// // //             placeholder="फक्त मराठी मजकूर"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       <View style={styles.row3}>
-// // //         <View style={{ flex: 1, marginRight: 6 }}>
-// // //           <Field
-// // //             label="मूळगाव"
-// // //             required
-// // //             value={data.village}
-// // //             onChangeText={handleMarathiInput("village")}
-// // //             placeholder="गाव"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// // //           <Field
-// // //             label="तालुका"
-// // //             required
-// // //             value={data.taluka}
-// // //             onChangeText={handleMarathiInput("taluka")}
-// // //             placeholder="तालुका"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 6 }}>
-// // //           <Field
-// // //             label="जिल्हा"
-// // //             required
-// // //             value={data.district}
-// // //             onChangeText={handleMarathiInput("district")}
-// // //             placeholder="जिल्हा"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       {/* NUMBER ONLY SECTION: Brothers */}
-// // //       <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field
-// // //             label="विवाहित"
-// // //             value={data.brotherMarried}
-// // //             onChangeText={handleNumberInput("brotherMarried")}
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field
-// // //             label="अविवाहित"
-// // //             value={data.brotherUnmarried}
-// // //             onChangeText={handleNumberInput("brotherUnmarried")}
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       {/* NUMBER ONLY SECTION: Sisters */}
-// // //       <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// // //       <View style={styles.row2}>
-// // //         <View style={{ flex: 1, marginRight: 8 }}>
-// // //           <Field
-// // //             label="विवाहित"
-// // //             value={data.sisterMarried}
-// // //             onChangeText={handleNumberInput("sisterMarried")}
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //         <View style={{ flex: 1, marginLeft: 8 }}>
-// // //           <Field
-// // //             label="अविवाहित"
-// // //             value={data.sisterUnmarried}
-// // //             onChangeText={handleNumberInput("sisterUnmarried")}
-// // //             keyboardType="numeric"
-// // //           />
-// // //         </View>
-// // //       </View>
-
-// // //       {/* NUMBER ONLY SECTION: Mobile */}
-// // //       <Field
-// // //         label="वैयक्तिक मोबाइल नंबर"
-// // //         value={data.mobile}
-// // //         onChangeText={handleNumberInput("mobile")}
-// // //         keyboardType="phone-pad"
-// // //         placeholder="+91"
-// // //       />
-
-// // //       {/* MARATHI ONLY SECTION: Notes Pad */}
-// // //       <View style={styles.marathiPadWrap}>
-// // //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// // //           इतर माहिती (फक्त मराठी)
-// // //         </Text>
-// // //         <TextInput
-// // //           style={styles.marathiPad}
-// // //           multiline
-// // //           placeholder="येथे मराठीत टाइप करा..."
-// // //           placeholderTextColor="#bbb"
-// // //           value={data.marathiNotes || ""}
-// // //           onChangeText={handleMarathiInput("marathiNotes")}
-// // //         />
-// // //       </View>
-// // //     </ScrollView>
-// // //   );
-// // // }
-
-
-
-
-
-
-
-
-
-
-
-// // import React, { useState } from "react";
-// // import { View, Text, ScrollView, TextInput, TouchableOpacity, Platform } from "react-native";
-// // import DateTimePicker from "@react-native-community/datetimepicker";
-// // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // export default function Step2({ data, setData }) {
-// //   const [showPicker, setShowPicker] = useState(false);
-
-// //   // ---------------------------------------------------------
-// //   // LOGIC: MARATHI ONLY (Strict)
-// //   // ---------------------------------------------------------
-// //   const handleMarathiInput = (key) => (text) => {
-// //     const marathiOnly = text.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-// //     setData((p) => ({ ...p, [key]: marathiOnly }));
-// //   };
-
-// //   // Helper for Numbers Only
-// //   const handleNumberInput = (key) => (text) => {
-// //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// //   };
-
-// //   // ---------------------------------------------------------
-// //   // CALENDAR LOGIC
-// //   // ---------------------------------------------------------
-// //   const onDateChange = (event, selectedDate) => {
-// //     setShowPicker(Platform.OS === "ios"); // Keep open on iOS, close on Android
-// //     if (selectedDate) {
-// //       const day = String(selectedDate.getDate()).padStart(2, "0");
-// //       const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-// //       const year = selectedDate.getFullYear();
-// //       const formattedDate = `${day}/${month}/${year}`;
-// //       setData((p) => ({ ...p, dob: formattedDate }));
-// //     }
-// //   };
-
-// //   return (
-// //     <ScrollView showsVerticalScrollIndicator={false}>
-// //       <SectionHeader title="Personal Information" />
-
-// //       {/* DATE ROW WITH CALENDAR */}
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// //           <TouchableOpacity onPress={() => setShowPicker(true)}>
-// //             <View pointerEvents="none">
-// //               <Field
-// //                 label="जन्म तारीख"
-// //                 required
-// //                 value={data.dob}
-// //                 placeholder="DD/MM/YYYY"
-// //               />
-// //             </View>
-// //           </TouchableOpacity>
-// //         </View>
-
-// //         {showPicker && (
-// //           <DateTimePicker
-// //             value={new Date()}
-// //             mode="date"
-// //             display="default"
-// //             onChange={onDateChange}
-// //           />
-// //         )}
-
-// //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// //           <Field
-// //             label="तास"
-// //             value={data.birthHour}
-// //             onChangeText={handleNumberInput("birthHour")}
-// //             placeholder="--"
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// //           <Field
-// //             label="मिनिटे"
-// //             value={data.birthMin}
-// //             onChangeText={handleNumberInput("birthMin")}
-// //             placeholder="00"
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       {/* MARATHI ONLY FIELDS */}
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// //           <Field
-// //             label="जन्मस्थळ"
-// //             required
-// //             value={data.birthPlace}
-// //             onChangeText={handleMarathiInput("birthPlace")}
-// //             placeholder="जन्मस्थळ"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// //           <Field
-// //             label="ऊंची फुट"
-// //             required
-// //             value={data.heightFt}
-// //             onChangeText={handleNumberInput("heightFt")}
-// //             placeholder="00"
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// //           <Field
-// //             label="इंच"
-// //             value={data.heightIn}
-// //             onChangeText={handleNumberInput("heightIn")}
-// //             placeholder="00"
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field
-// //             label="वर्ण"
-// //             required
-// //             value={data.complexion}
-// //             onChangeText={handleMarathiInput("complexion")}
-// //             placeholder="सावळा/गोरा"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field
-// //             label="रक्तगट"
-// //             required
-// //             value={data.bloodGroup}
-// //             onChangeText={handleMarathiInput("bloodGroup")}
-// //             placeholder="रक्तगट"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field
-// //             label="मामकुल"
-// //             required
-// //             value={data.mamkul}
-// //             onChangeText={handleMarathiInput("mamkul")}
-// //             placeholder="आडनाव"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field
-// //             label="गोत्र"
-// //             required
-// //             value={data.gotra}
-// //             onChangeText={handleMarathiInput("gotra")}
-// //             placeholder="गोत्र"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1, marginRight: 6 }}>
-// //           <Field
-// //             label="मूळगाव"
-// //             required
-// //             value={data.village}
-// //             onChangeText={handleMarathiInput("village")}
-// //             placeholder="गाव"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginHorizontal: 3 }}>
-// //           <Field
-// //             label="तालुका"
-// //             required
-// //             value={data.taluka}
-// //             onChangeText={handleMarathiInput("taluka")}
-// //             placeholder="तालुका"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 6 }}>
-// //           <Field
-// //             label="जिल्हा"
-// //             required
-// //             value={data.district}
-// //             onChangeText={handleMarathiInput("district")}
-// //             placeholder="जिल्हा"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       {/* NUMBER ONLY SECTIONS */}
-// //       <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field
-// //             label="विवाहित"
-// //             value={data.brotherMarried}
-// //             onChangeText={handleNumberInput("brotherMarried")}
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field
-// //             label="अविवाहित"
-// //             value={data.brotherUnmarried}
-// //             onChangeText={handleNumberInput("brotherUnmarried")}
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field
-// //             label="विवाहित"
-// //             value={data.sisterMarried}
-// //             onChangeText={handleNumberInput("sisterMarried")}
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field
-// //             label="अविवाहित"
-// //             value={data.sisterUnmarried}
-// //             onChangeText={handleNumberInput("sisterUnmarried")}
-// //             keyboardType="numeric"
-// //           />
-// //         </View>
-// //       </View>
-
-// //       <Field
-// //         label="वैयक्तिक मोबाइल नंबर"
-// //         value={data.mobile}
-// //         onChangeText={handleNumberInput("mobile")}
-// //         keyboardType="phone-pad"
-// //         placeholder="+91"
-// //       />
-
-// //       <View style={styles.marathiPadWrap}>
-// //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// //           इतर माहिती (फक्त मराठी)
-// //         </Text>
-// //         <TextInput
-// //           style={styles.marathiPad}
-// //           multiline
-// //           placeholder="येथे मराठीत टाइप करा..."
-// //           placeholderTextColor="#bbb"
-// //           value={data.marathiNotes || ""}
-// //           onChangeText={handleMarathiInput("marathiNotes")}
-// //         />
-// //       </View>
-// //     </ScrollView>
-// //   );
-// // }
-
-
-
-
-
-
-
-
-
-
-
-
-// // // api
-// // import React, { useState, useRef } from "react";
-// // import { 
-// //   View, Text, ScrollView, TextInput, TouchableOpacity, 
-// //   Platform, ActivityIndicator 
-// // } from "react-native";
-// // import DateTimePicker from "@react-native-community/datetimepicker";
-// // import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // // Reuse the translation helper (Ensure this matches your global helper or keep it here)
-// // const translateText = async (text, targetLanguage = "mr") => {
-// //   if (!text || text.trim().length === 0) return "";
-// //   const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-// //   try {
-// //     const response = await fetch(
-// //       `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-// //       {
-// //         method: "POST",
-// //         headers: { "Content-Type": "application/json" },
-// //         body: JSON.stringify({
-// //           q: text,
-// //           target: targetLanguage,
-// //           source: "en",
-// //           format: "text",
-// //         }),
-// //       }
-// //     );
-// //     const data = await response.json();
-// //     return data.data?.translations?.[0]?.translatedText || text;
-// //   } catch (error) {
-// //     console.error("Translation error:", error);
-// //     return text;
-// //   }
-// // };
-
-// // export default function Step2({ data, setData }) {
-// //   const [showPicker, setShowPicker] = useState(false);
-// //   const [translatingFields, setTranslatingFields] = useState({});
-// //   const typingTimeoutRef = useRef(null);
-
-// //   // ---------------------------------------------------------
-// //   // LOGIC: DEBOUNCED MARATHI TRANSLATION
-// //   // ---------------------------------------------------------
-// //   const handleMarathiInput = (key) => (val) => {
-// //     // 1. Update UI immediately
-// //     setData((p) => ({ ...p, [key]: val }));
-
-// //     // 2. Clear timer
-// //     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-// //     // 3. Detect English for Auto-translate
-// //     const englishChars = val.match(/[a-zA-Z]/g);
-
-// //     if (englishChars && englishChars.length > 0) {
-// //       const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-// //       if (englishText.length > 1) {
-// //         setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-// //         typingTimeoutRef.current = setTimeout(async () => {
-// //           try {
-// //             const translated = await translateText(englishText, "mr");
-// //             setData((p) => ({ ...p, [key]: translated }));
-// //           } finally {
-// //             setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-// //           }
-// //         }, 800);
-// //       }
-// //     } else {
-// //       // Pure Marathi filtering
-// //       const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-// //       setData((p) => ({ ...p, [key]: filtered }));
-// //     }
-// //   };
-
-// //   const handleNumberInput = (key) => (text) => {
-// //     const numbersOnly = text.replace(/[^0-9]/g, "");
-// //     setData((p) => ({ ...p, [key]: numbersOnly }));
-// //   };
-
-// //   const onDateChange = (event, selectedDate) => {
-// //     setShowPicker(Platform.OS === "ios");
-// //     if (selectedDate) {
-// //       const day = String(selectedDate.getDate()).padStart(2, "0");
-// //       const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-// //       const year = selectedDate.getFullYear();
-// //       setData((p) => ({ ...p, dob: `${day}/${month}/${year}` }));
-// //     }
-// //   };
-
-// //   // Helper to show indicator
-// //   const renderIndicator = (key) => translatingFields[key] && (
-// //     <View style={{ position: 'absolute', right: 10, top: '55%' }}>
-// //       <ActivityIndicator size="small" color="#f97316" />
-// //     </View>
-// //   );
-
-// //   return (
-// //     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
-// //       <SectionHeader title="Personal Information" />
-
-// //       {/* BIRTH DATE & TIME */}
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1.2, marginRight: 6 }}>
-// //           <TouchableOpacity onPress={() => setShowPicker(true)}>
-// //             <View pointerEvents="none">
-// //               <Field label="जन्म तारीख" required value={data.dob} placeholder="DD/MM/YYYY" />
-// //             </View>
-// //           </TouchableOpacity>
-// //         </View>
-
-// //         {showPicker && (
-// //           <DateTimePicker value={new Date()} mode="date" display="default" onChange={onDateChange} />
-// //         )}
-
-// //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// //           <Field label="तास" value={data.birthHour} onChangeText={handleNumberInput("birthHour")} placeholder="--" keyboardType="numeric" />
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// //           <Field label="मिनिटे" value={data.birthMin} onChangeText={handleNumberInput("birthMin")} placeholder="00" keyboardType="numeric" />
-// //         </View>
-// //       </View>
-
-// //       {/* BIRTH PLACE & HEIGHT */}
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1.2, marginRight: 6, position: 'relative' }}>
-// //           <Field
-// //             label="जन्मस्थळ"
-// //             required
-// //             value={data.birthPlace}
-// //             onChangeText={handleMarathiInput("birthPlace")}
-// //             placeholder="मराठी"
-// //             inputStyle={translatingFields.birthPlace && { opacity: 0.6 }}
-// //           />
-// //           {renderIndicator("birthPlace")}
-// //         </View>
-// //         <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-// //           <Field label="ऊंची फुट" required value={data.heightFt} onChangeText={handleNumberInput("heightFt")} placeholder="00" keyboardType="numeric" />
-// //         </View>
-// //         <View style={{ flex: 0.8, marginLeft: 6 }}>
-// //           <Field label="इंच" value={data.heightIn} onChangeText={handleNumberInput("heightIn")} placeholder="00" keyboardType="numeric" />
-// //         </View>
-// //       </View>
-
-// //       {/* COMPLEXION & BLOOD GROUP */}
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-// //           <Field
-// //             label="वर्ण"
-// //             required
-// //             value={data.complexion}
-// //             onChangeText={handleMarathiInput("complexion")}
-// //             placeholder="मराठी"
-// //             inputStyle={translatingFields.complexion && { opacity: 0.6 }}
-// //           />
-// //           {renderIndicator("complexion")}
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-// //           <Field
-// //             label="रक्तगट"
-// //             required
-// //             value={data.bloodGroup}
-// //             onChangeText={handleMarathiInput("bloodGroup")}
-// //             placeholder="उदा. A+"
-// //             inputStyle={translatingFields.bloodGroup && { opacity: 0.6 }}
-// //           />
-// //           {renderIndicator("bloodGroup")}
-// //         </View>
-// //       </View>
-
-// //       {/* MAMKUL & GOTRA */}
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-// //           <Field
-// //             label="मामकुल"
-// //             required
-// //             value={data.mamkul}
-// //             onChangeText={handleMarathiInput("mamkul")}
-// //             placeholder="मराठी"
-// //             inputStyle={translatingFields.mamkul && { opacity: 0.6 }}
-// //           />
-// //           {renderIndicator("mamkul")}
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-// //           <Field
-// //             label="गोत्र"
-// //             required
-// //             value={data.gotra}
-// //             onChangeText={handleMarathiInput("gotra")}
-// //             placeholder="मराठी"
-// //             inputStyle={translatingFields.gotra && { opacity: 0.6 }}
-// //           />
-// //           {renderIndicator("gotra")}
-// //         </View>
-// //       </View>
-
-// //       {/* VILLAGE, TALUKA, DISTRICT */}
-// //       <View style={styles.row3}>
-// //         <View style={{ flex: 1, marginRight: 6, position: 'relative' }}>
-// //           <Field label="मूळगाव" required value={data.village} onChangeText={handleMarathiInput("village")} placeholder="मराठी" />
-// //           {renderIndicator("village")}
-// //         </View>
-// //         <View style={{ flex: 1, marginHorizontal: 3, position: 'relative' }}>
-// //           <Field label="तालुका" required value={data.taluka} onChangeText={handleMarathiInput("taluka")} placeholder="मराठी" />
-// //           {renderIndicator("taluka")}
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 6, position: 'relative' }}>
-// //           <Field label="जिल्हा" required value={data.district} onChangeText={handleMarathiInput("district")} placeholder="मराठी" />
-// //           {renderIndicator("district")}
-// //         </View>
-// //       </View>
-
-// //       {/* BROTHERS & SISTERS */}
-// //       <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field label="विवाहित" value={data.brotherMarried} onChangeText={handleNumberInput("brotherMarried")} keyboardType="numeric" />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field label="अविवाहित" value={data.brotherUnmarried} onChangeText={handleNumberInput("brotherUnmarried")} keyboardType="numeric" />
-// //         </View>
-// //       </View>
-
-// //       <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-// //       <View style={styles.row2}>
-// //         <View style={{ flex: 1, marginRight: 8 }}>
-// //           <Field label="विवाहित" value={data.sisterMarried} onChangeText={handleNumberInput("sisterMarried")} keyboardType="numeric" />
-// //         </View>
-// //         <View style={{ flex: 1, marginLeft: 8 }}>
-// //           <Field label="अविवाहित" value={data.sisterUnmarried} onChangeText={handleNumberInput("sisterUnmarried")} keyboardType="numeric" />
-// //         </View>
-// //       </View>
-
-// //       <Field
-// //         label="वैयक्तिक मोबाइल नंबर"
-// //         value={data.mobile}
-// //         onChangeText={handleNumberInput("mobile")}
-// //         keyboardType="phone-pad"
-// //         placeholder="+91"
-// //       />
-
-// //       {/* MARATHI NOTES */}
-// //       <View style={[styles.marathiPadWrap, { position: 'relative' }]}>
-// //         <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-// //           इतर माहिती (auto-translate)
-// //         </Text>
-// //         <TextInput
-// //           style={[styles.marathiPad, translatingFields.marathiNotes && { opacity: 0.6 }]}
-// //           multiline
-// //           placeholder="येथे मराठीत टाइप करा किंवा English लिहा..."
-// //           placeholderTextColor="#bbb"
-// //           value={data.marathiNotes || ""}
-// //           onChangeText={handleMarathiInput("marathiNotes")}
-// //         />
-// //         {translatingFields.marathiNotes && (
-// //           <View style={{ position: 'absolute', right: 10, top: 35 }}>
-// //             <ActivityIndicator size="small" color="#f97316" />
-// //           </View>
-// //         )}
-// //       </View>
-// //     </ScrollView>
-// //   );
-// // }
-
-
-
-
-
-
-// // new kkk
-
-// // api - FIXED WITH WORKING KEYBOARD SCROLL
-// import React, { useState, useRef } from "react";
-// import { 
-//   View, Text, ScrollView, TextInput, TouchableOpacity, 
-//   Platform, ActivityIndicator, KeyboardAvoidingView 
-// } from "react-native";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-// import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
-
-// // Reuse the translation helper (Ensure this matches your global helper or keep it here)
-// const translateText = async (text, targetLanguage = "mr") => {
-//   if (!text || text.trim().length === 0) return "";
-//   const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-//   try {
-//     const response = await fetch(
-//       `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-//       {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({
-//           q: text,
-//           target: targetLanguage,
-//           source: "en",
-//           format: "text",
-//         }),
-//       }
-//     );
-//     const data = await response.json();
-//     return data.data?.translations?.[0]?.translatedText || text;
-//   } catch (error) {
-//     console.error("Translation error:", error);
-//     return text;
-//   }
-// };
-
-// export default function Step2({ data, setData }) {
-//   const [showPicker, setShowPicker] = useState(false);
-//   const [translatingFields, setTranslatingFields] = useState({});
-//   const typingTimeoutRef = useRef(null);
-//   const scrollViewRef = useRef(null);
-
-//   // ---------------------------------------------------------
-//   // LOGIC: DEBOUNCED MARATHI TRANSLATION
-//   // ---------------------------------------------------------
-//   const handleMarathiInput = (key) => (val) => {
-//     // 1. Update UI immediately
-//     setData((p) => ({ ...p, [key]: val }));
-
-//     // 2. Clear timer
-//     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-//     // 3. Detect English for Auto-translate
-//     const englishChars = val.match(/[a-zA-Z]/g);
-
-//     if (englishChars && englishChars.length > 0) {
-//       const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-//       if (englishText.length > 1) {
-//         setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-//         typingTimeoutRef.current = setTimeout(async () => {
-//           try {
-//             const translated = await translateText(englishText, "mr");
-//             setData((p) => ({ ...p, [key]: translated }));
-//           } finally {
-//             setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-//           }
-//         }, 800);
-//       }
-//     } else {
-//       // Pure Marathi filtering
-//       const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-//       setData((p) => ({ ...p, [key]: filtered }));
-//     }
-//   };
-
-//   const handleNumberInput = (key) => (text) => {
-//     const numbersOnly = text.replace(/[^0-9]/g, "");
-//     setData((p) => ({ ...p, [key]: numbersOnly }));
-//   };
-
-//   const onDateChange = (event, selectedDate) => {
-//     setShowPicker(Platform.OS === "ios");
-//     if (selectedDate) {
-//       const day = String(selectedDate.getDate()).padStart(2, "0");
-//       const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-//       const year = selectedDate.getFullYear();
-//       setData((p) => ({ ...p, dob: `${day}/${month}/${year}` }));
-//     }
-//   };
-
-//   // Helper to show indicator
-//   const renderIndicator = (key) => translatingFields[key] && (
-//     <View style={{ position: 'absolute', right: 10, top: '55%' }}>
-//       <ActivityIndicator size="small" color="#f97316" />
-//     </View>
-//   );
-
-//   // ✅ KEYBOARD SCROLL HANDLER - Auto scroll when focusing text inputs
-//   const handleMarathiFieldFocus = () => {
-//     setTimeout(() => {
-//       scrollViewRef.current?.scrollToEnd({ animated: true });
-//     }, 300);
-//   };
-
-//   return (
-//     <KeyboardAvoidingView 
-//       behavior={Platform.OS === "ios" ? "padding" : "height"}
-//       style={{ flex: 1 }}
-//       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
-//     >
-//       <ScrollView 
-//         ref={scrollViewRef}
-//         showsVerticalScrollIndicator={false} 
-//         contentContainerStyle={{ paddingBottom: 40 }}
-//         keyboardShouldPersistTaps="handled"
-//         scrollEventThrottle={16}
-//       >
-//         <SectionHeader title="Personal Information" />
-
-//         {/* BIRTH DATE & TIME */}
-//         <View style={styles.row3}>
-//           <View style={{ flex: 1.2, marginRight: 6 }}>
-//             <TouchableOpacity onPress={() => setShowPicker(true)}>
-//               <View pointerEvents="none">
-//                 <Field label="जन्म तारीख" required value={data.dob} placeholder="DD/MM/YYYY" />
-//               </View>
-//             </TouchableOpacity>
-//           </View>
-
-//           {showPicker && (
-//             <DateTimePicker value={new Date()} mode="date" display="default" onChange={onDateChange} />
-//           )}
-
-//           <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-//             <Field label="तास" value={data.birthHour} onChangeText={handleNumberInput("birthHour")} placeholder="--" keyboardType="numeric" />
-//           </View>
-//           <View style={{ flex: 0.8, marginLeft: 6 }}>
-//             <Field label="मिनिटे" value={data.birthMin} onChangeText={handleNumberInput("birthMin")} placeholder="00" keyboardType="numeric" />
-//           </View>
-//         </View>
-
-//         {/* BIRTH PLACE & HEIGHT */}
-//         <View style={styles.row3}>
-//           <View style={{ flex: 1.2, marginRight: 6, position: 'relative' }}>
-//             <Field
-//               label="जन्मस्थळ"
-//               required
-//               value={data.birthPlace}
-//               onChangeText={handleMarathiInput("birthPlace")}
-//               placeholder="मराठी"
-//               inputStyle={translatingFields.birthPlace && { opacity: 0.6 }}
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("birthPlace")}
-//           </View>
-//           <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-//             <Field label="ऊंची फुट" required value={data.heightFt} onChangeText={handleNumberInput("heightFt")} placeholder="00" keyboardType="numeric" />
-//           </View>
-//           <View style={{ flex: 0.8, marginLeft: 6 }}>
-//             <Field label="इंच" value={data.heightIn} onChangeText={handleNumberInput("heightIn")} placeholder="00" keyboardType="numeric" />
-//           </View>
-//         </View>
-
-//         {/* COMPLEXION & BLOOD GROUP */}
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-//             <Field
-//               label="वर्ण"
-//               required
-//               value={data.complexion}
-//               onChangeText={handleMarathiInput("complexion")}
-//               placeholder="मराठी"
-//               inputStyle={translatingFields.complexion && { opacity: 0.6 }}
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("complexion")}
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-//             <Field
-//               label="रक्तगट"
-//               required
-//               value={data.bloodGroup}
-//               onChangeText={handleMarathiInput("bloodGroup")}
-//               placeholder="उदा. A+"
-//               inputStyle={translatingFields.bloodGroup && { opacity: 0.6 }}
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("bloodGroup")}
-//           </View>
-//         </View>
-
-//         {/* MAMKUL & GOTRA */}
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-//             <Field
-//               label="मामकुल"
-//               required
-//               value={data.mamkul}
-//               onChangeText={handleMarathiInput("mamkul")}
-//               placeholder="मराठी"
-//               inputStyle={translatingFields.mamkul && { opacity: 0.6 }}
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("mamkul")}
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-//             <Field
-//               label="गोत्र"
-//               required
-//               value={data.gotra}
-//               onChangeText={handleMarathiInput("gotra")}
-//               placeholder="मराठी"
-//               inputStyle={translatingFields.gotra && { opacity: 0.6 }}
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("gotra")}
-//           </View>
-//         </View>
-
-//         {/* VILLAGE, TALUKA, DISTRICT */}
-//         <View style={styles.row3}>
-//           <View style={{ flex: 1, marginRight: 6, position: 'relative' }}>
-//             <Field 
-//               label="मूळगाव" 
-//               required 
-//               value={data.village} 
-//               onChangeText={handleMarathiInput("village")} 
-//               placeholder="मराठी"
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("village")}
-//           </View>
-//           <View style={{ flex: 1, marginHorizontal: 3, position: 'relative' }}>
-//             <Field 
-//               label="तालुका" 
-//               required 
-//               value={data.taluka} 
-//               onChangeText={handleMarathiInput("taluka")} 
-//               placeholder="मराठी"
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("taluka")}
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 6, position: 'relative' }}>
-//             <Field 
-//               label="जिल्हा" 
-//               required 
-//               value={data.district} 
-//               onChangeText={handleMarathiInput("district")} 
-//               placeholder="मराठी"
-//               onFocus={handleMarathiFieldFocus}
-//             />
-//             {renderIndicator("district")}
-//           </View>
-//         </View>
-
-//         {/* BROTHERS & SISTERS */}
-//         <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8 }}>
-//             <Field label="विवाहित" value={data.brotherMarried} onChangeText={handleNumberInput("brotherMarried")} keyboardType="numeric" />
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8 }}>
-//             <Field label="अविवाहित" value={data.brotherUnmarried} onChangeText={handleNumberInput("brotherUnmarried")} keyboardType="numeric" />
-//           </View>
-//         </View>
-
-//         <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-//         <View style={styles.row2}>
-//           <View style={{ flex: 1, marginRight: 8 }}>
-//             <Field label="विवाहित" value={data.sisterMarried} onChangeText={handleNumberInput("sisterMarried")} keyboardType="numeric" />
-//           </View>
-//           <View style={{ flex: 1, marginLeft: 8 }}>
-//             <Field label="अविवाहित" value={data.sisterUnmarried} onChangeText={handleNumberInput("sisterUnmarried")} keyboardType="numeric" />
-//           </View>
-//         </View>
-
-//         <Field
-//           label="वैयक्तिक मोबाइल नंबर"
-//           value={data.mobile}
-//           onChangeText={handleNumberInput("mobile")}
-//           keyboardType="phone-pad"
-//           placeholder="+91"
-//         />
-
-//         {/* MARATHI NOTES - WITH EXTRA SPACE FOR KEYBOARD */}
-//         <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-//           <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-//             इतर माहिती (auto-translate)
-//           </Text>
-//           <TextInput
-//             style={[styles.marathiPad, translatingFields.marathiNotes && { opacity: 0.6 }]}
-//             multiline
-//             placeholder="येथे मराठीत टाइप करा किंवा English लिहा..."
-//             placeholderTextColor="#bbb"
-//             value={data.marathiNotes || ""}
-//             onChangeText={handleMarathiInput("marathiNotes")}
-//             onFocus={handleMarathiFieldFocus}
-//           />
-//           {translatingFields.marathiNotes && (
-//             <View style={{ position: 'absolute', right: 10, top: 35 }}>
-//               <ActivityIndicator size="small" color="#f97316" />
-//             </View>
-//           )}
-//         </View>
-//       </ScrollView>
-//     </KeyboardAvoidingView>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Step2.jsx - FIXED WITH AGGRESSIVE KEYBOARD SCROLL
-import React, { useState, useRef } from "react";
-import { 
-  View, Text, ScrollView, TextInput, TouchableOpacity, 
-  Platform, ActivityIndicator, KeyboardAvoidingView 
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Field, SectionHeader, sharedStyles as styles } from "./SharedUI";
+import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
+import registrationApi from "../../api/registrationApi";
+import { getAuthUserId } from "../../api/apiClient";
 
-// Reuse the translation helper
-const translateText = async (text, targetLanguage = "mr") => {
-  if (!text || text.trim().length === 0) return "";
-  const API_KEY = "AIzaSyDaU2e1o8NbVbgh9I2p14EDekdP3ZvYyW4";
-  try {
-    const response = await fetch(
-      `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          target: targetLanguage,
-          source: "en",
-          format: "text",
-        }),
+const COMMON_EDUCATION_LEVELS = [
+  "Graduate",
+  "Post Graduate",
+  "Engineer",
+  "Doctor",
+  "Diploma",
+  "CA / CS / ICWA",
+  "Ph.D.",
+  "12th / Higher Secondary",
+];
+
+const OCCUPATION_TYPES = [
+  { value: "नोकरी (Job / Service)", label: "नोकरी" },
+  { value: "व्यवसाय (Business)", label: "व्यवसाय" },
+  { value: "शेती (Agriculture)", label: "शेती" },
+  { value: "काही नाही (Not Working)", label: "काही नाही" },
+];
+
+export default function Step2({
+  data = {},
+  setData,
+  onNext,
+  onBack,
+  candidateId,
+  applicationNo = "New",
+  currentUser = {},
+}) {
+  // -------------------------------------------------------------
+  // STATE
+  // -------------------------------------------------------------
+  const [educationLevel, setEducationLevel] = useState(data.educationLevel || "");
+  const [education, setEducation] = useState(data.education || "");
+  const [jobBuzEdu, setJobBuzEdu] = useState(data.jobBuzEdu || "नोकरी");
+  const [position, setPosition] = useState(data.position || "");
+  const [company, setCompany] = useState(data.company || "");
+  const [placeOfEmployment, setPlaceOfEmployment] = useState(data.placeOfEmployment || "");
+  const [companyPhone, setCompanyPhone] = useState(data.companyPhone || "");
+  const [monthlyIncome, setMonthlyIncome] = useState(data.monthlyIncome || "");
+  const [clientStamp, setClientStamp] = useState(data.clientStamp || data.ClientStamp || null);
+
+  const [saving, setSaving] = useState(false);
+  const [loadingInitial, setLoadingInitial] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const educationRef = useRef(null);
+  const positionRef = useRef(null);
+  const companyRef = useRef(null);
+  const placeRef = useRef(null);
+  const phoneRef = useRef(null);
+  const incomeRef = useRef(null);
+
+  // -------------------------------------------------------------
+  // LOAD EXISTING DETAILS (GET /api/registration/GetQualificationEmploymentDetails)
+  // -------------------------------------------------------------
+  useEffect(() => {
+    const effectiveId = Number(candidateId || currentUser?.CandidateId || 0);
+    if (effectiveId > 0) {
+      loadSavedDetails(effectiveId);
+    }
+  }, [candidateId]);
+
+  const loadSavedDetails = async (id) => {
+    try {
+      setLoadingInitial(true);
+      const res = await registrationApi.getQualificationEmploymentDetails(id);
+      console.log("Step 2 loaded qualification details:", res);
+      if (res) {
+        const stamp = res.ClientStamp || res.clientStamp;
+        if (stamp) setClientStamp(stamp);
+
+        if (res.EducationLevel) setEducationLevel(res.EducationLevel);
+        if (res.Education) setEducation(res.Education);
+        if (res.JobBuzEdu) setJobBuzEdu(res.JobBuzEdu);
+        if (res.Position) setPosition(res.Position);
+        if (res.Company) setCompany(res.Company);
+        if (res.PlaceOfEmployment) setPlaceOfEmployment(res.PlaceOfEmployment);
+        if (res.CompanyPhone) setCompanyPhone(res.CompanyPhone);
+        if (res.MonthlyIncome) setMonthlyIncome(res.MonthlyIncome);
       }
+    } catch (err) {
+      console.log("Step 2 load notice:", err.message);
+    } finally {
+      setLoadingInitial(false);
+    }
+  };
+
+  // -------------------------------------------------------------
+  // VALIDATION
+  // -------------------------------------------------------------
+  const validateForm = () => {
+    const errs = {};
+    if (!educationLevel.trim()) {
+      errs.educationLevel = "Education level is required (शिक्षण पातळी आवश्यक आहे)";
+    }
+    if (!education.trim()) {
+      errs.education = "Education degree / field is required (पदवी / शाखा आवश्यक आहे)";
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  // -------------------------------------------------------------
+  // SUBMIT (POST /api/registration/SaveQualificationEmploymentDetails)
+  // -------------------------------------------------------------
+  const handleSaveAndContinue = async () => {
+    if (!validateForm()) {
+      Alert.alert("Required Fields", "Please fill in all mandatory fields marked with *.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const effectiveCandidateId = Number(candidateId || currentUser?.CandidateId || 0);
+      const effectiveUserId = Number(currentUser?.UserId || data?.userId || getAuthUserId() || 0);
+
+      const payload = {
+        ActorUserId: effectiveUserId,
+        ActorType: "candidate",
+        ClientStamp: clientStamp || null,
+        CandidateId: effectiveCandidateId,
+        UserId: effectiveUserId,
+        UserLoginId: currentUser?.UserLoginId || currentUser?.Email || "",
+        EducationLevel: educationLevel.trim(),
+        Education: education.trim(),
+        JobBuzEdu: jobBuzEdu.trim(),
+        Position: position.trim(),
+        Company: company.trim(),
+        PlaceOfEmployment: placeOfEmployment.trim(),
+        CompanyPhone: companyPhone.trim(),
+        MonthlyIncome: monthlyIncome.trim(),
+      };
+
+      const response = await registrationApi.saveQualificationEmploymentDetails(payload);
+
+      if (response?.Success === false) {
+        throw new Error(response?.Message || "Failed to save qualification details.");
+      }
+
+      const newStamp = response?.Data?.ClientStamp || response?.ClientStamp;
+      if (newStamp) setClientStamp(newStamp);
+
+      if (setData) {
+        setData((prev) => ({
+          ...prev,
+          ClientStamp: newStamp || clientStamp || null,
+          educationLevel,
+          education,
+          jobBuzEdu,
+          position,
+          company,
+          placeOfEmployment,
+          companyPhone,
+          monthlyIncome,
+        }));
+      }
+
+      Alert.alert(
+        "Success",
+        "शिक्षण आणि नोकरीची माहिती साठवली! (Qualification Details Saved)",
+        [{ text: "Continue to Step 3", onPress: () => onNext && onNext() }]
+      );
+    } catch (err) {
+      console.error("Save Qualification Error:", err);
+      const msg =
+        err.response?.data?.Message ||
+        err.response?.data?.ErrorMessage ||
+        err.message ||
+        "Could not save qualification details. Please check network connection.";
+      Alert.alert("Save Failed", msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loadingInitial) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color="#831843" />
+        <Text style={styles.loadingText}>Loading saved details...</Text>
+      </View>
     );
-    const data = await response.json();
-    return data.data?.translations?.[0]?.translatedText || text;
-  } catch (error) {
-    console.error("Translation error:", error);
-    return text;
   }
-};
-
-export default function Step2({ data, setData }) {
-  const [showPicker, setShowPicker] = useState(false);
-  const [translatingFields, setTranslatingFields] = useState({});
-  const typingTimeoutRef = useRef(null);
-  const scrollViewRef = useRef(null);
-
-  // ---------------------------------------------------------
-  // LOGIC: DEBOUNCED MARATHI TRANSLATION
-  // ---------------------------------------------------------
-  const handleMarathiInput = (key) => (val) => {
-    // 1. Update UI immediately
-    setData((p) => ({ ...p, [key]: val }));
-
-    // 2. Clear timer
-    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-
-    // 3. Detect English for Auto-translate
-    const englishChars = val.match(/[a-zA-Z]/g);
-
-    if (englishChars && englishChars.length > 0) {
-      const englishText = val.replace(/[^\x00-\x7F\s]/g, "").trim();
-      if (englishText.length > 1) {
-        setTranslatingFields((prev) => ({ ...prev, [key]: true }));
-
-        typingTimeoutRef.current = setTimeout(async () => {
-          try {
-            const translated = await translateText(englishText, "mr");
-            setData((p) => ({ ...p, [key]: translated }));
-          } finally {
-            setTranslatingFields((prev) => ({ ...prev, [key]: false }));
-          }
-        }, 800);
-      }
-    } else {
-      // Pure Marathi filtering
-      const filtered = val.replace(/[^\u0900-\u097F0-9\s.,?!]/g, "");
-      setData((p) => ({ ...p, [key]: filtered }));
-    }
-  };
-
-  const handleNumberInput = (key) => (text) => {
-    const numbersOnly = text.replace(/[^0-9]/g, "");
-    setData((p) => ({ ...p, [key]: numbersOnly }));
-  };
-
-  const onDateChange = (event, selectedDate) => {
-    setShowPicker(Platform.OS === "ios");
-    if (selectedDate) {
-      const day = String(selectedDate.getDate()).padStart(2, "0");
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const year = selectedDate.getFullYear();
-      setData((p) => ({ ...p, dob: `${day}/${month}/${year}` }));
-    }
-  };
-
-  // Helper to show indicator
-  const renderIndicator = (key) => translatingFields[key] && (
-    <View style={{ position: 'absolute', right: 10, top: '55%' }}>
-      <ActivityIndicator size="small" color="#f97316" />
-    </View>
-  );
-
-  // ─── UPDATED KEYBOARD SCROLL HANDLER ───
-  // Scrolls aggressively to the bottom on every focus
-  const handleMarathiFieldFocus = () => {
-    // Immediate scroll
-    scrollViewRef.current?.scrollToEnd({ animated: true });
-    
-    // Delayed scrolls to ensure keyboard is fully open
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, 100);
-    
-    setTimeout(() => {
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, 300);
-  };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
     >
-      <ScrollView 
-        ref={scrollViewRef}
-        showsVerticalScrollIndicator={false} 
-        // INCREASED PADDING BOTTOM TO 300 FOR EXTRA SCROLL ROOM
-        contentContainerStyle={{ paddingBottom: 300 }}
+      <ScrollView
+        contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
-        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
       >
-        <SectionHeader title="Personal Information" />
-
-        {/* BIRTH DATE & TIME */}
-        <View style={styles.row3}>
-          <View style={{ flex: 1.2, marginRight: 6 }}>
-            <TouchableOpacity onPress={() => setShowPicker(true)}>
-              <View pointerEvents="none">
-                <Field label="जन्म तारीख" required value={data.dob} placeholder="DD/MM/YYYY" />
+        {/* Banner */}
+        <View style={styles.banner}>
+          <View style={styles.bannerTopRow}>
+            <View style={styles.bannerTitleRow}>
+              <Ionicons name="school-outline" size={24} color="#FFFFFF" />
+              <View style={{ marginLeft: 8 }}>
+                <Text style={styles.bannerTitle}>
+                  Qualification & Employment (शिक्षण आणि नोकरी/व्यवसाय)
+                </Text>
+                <Text style={styles.bannerSub}>
+                  Application No: <Text style={styles.boldWhite}>{applicationNo}</Text>
+                </Text>
               </View>
-            </TouchableOpacity>
-          </View>
-
-          {showPicker && (
-            <DateTimePicker value={new Date()} mode="date" display="default" onChange={onDateChange} />
-          )}
-
-          <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-            <Field label="तास" value={data.birthHour} onChangeText={handleNumberInput("birthHour")} placeholder="--" keyboardType="numeric" />
-          </View>
-          <View style={{ flex: 0.8, marginLeft: 6 }}>
-            <Field label="मिनिटे" value={data.birthMin} onChangeText={handleNumberInput("birthMin")} placeholder="00" keyboardType="numeric" />
-          </View>
-        </View>
-
-        {/* BIRTH PLACE & HEIGHT */}
-        <View style={styles.row3}>
-          <View style={{ flex: 1.2, marginRight: 6, position: 'relative' }}>
-            <Field
-              label="जन्मस्थळ"
-              required
-              value={data.birthPlace}
-              onChangeText={handleMarathiInput("birthPlace")}
-              placeholder="मराठी"
-              inputStyle={translatingFields.birthPlace && { opacity: 0.6 }}
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("birthPlace")}
-          </View>
-          <View style={{ flex: 0.8, marginHorizontal: 3 }}>
-            <Field label="ऊंची फुट" required value={data.heightFt} onChangeText={handleNumberInput("heightFt")} placeholder="00" keyboardType="numeric" />
-          </View>
-          <View style={{ flex: 0.8, marginLeft: 6 }}>
-            <Field label="इंच" value={data.heightIn} onChangeText={handleNumberInput("heightIn")} placeholder="00" keyboardType="numeric" />
-          </View>
-        </View>
-
-        {/* COMPLEXION & BLOOD GROUP */}
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-            <Field
-              label="वर्ण"
-              required
-              value={data.complexion}
-              onChangeText={handleMarathiInput("complexion")}
-              placeholder="मराठी"
-              inputStyle={translatingFields.complexion && { opacity: 0.6 }}
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("complexion")}
-          </View>
-          <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-            <Field
-              label="रक्तगट"
-              required
-              value={data.bloodGroup}
-              onChangeText={handleMarathiInput("bloodGroup")}
-              placeholder="उदा. A+"
-              inputStyle={translatingFields.bloodGroup && { opacity: 0.6 }}
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("bloodGroup")}
-          </View>
-        </View>
-
-        {/* MAMKUL & GOTRA */}
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8, position: 'relative' }}>
-            <Field
-              label="मामकुल"
-              required
-              value={data.mamkul}
-              onChangeText={handleMarathiInput("mamkul")}
-              placeholder="मराठी"
-              inputStyle={translatingFields.mamkul && { opacity: 0.6 }}
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("mamkul")}
-          </View>
-          <View style={{ flex: 1, marginLeft: 8, position: 'relative' }}>
-            <Field
-              label="गोत्र"
-              required
-              value={data.gotra}
-              onChangeText={handleMarathiInput("gotra")}
-              placeholder="मराठी"
-              inputStyle={translatingFields.gotra && { opacity: 0.6 }}
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("gotra")}
-          </View>
-        </View>
-
-        {/* VILLAGE, TALUKA, DISTRICT */}
-        <View style={styles.row3}>
-          <View style={{ flex: 1, marginRight: 6, position: 'relative' }}>
-            <Field 
-              label="मूळगाव" 
-              required 
-              value={data.village} 
-              onChangeText={handleMarathiInput("village")} 
-              placeholder="मराठी"
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("village")}
-          </View>
-          <View style={{ flex: 1, marginHorizontal: 3, position: 'relative' }}>
-            <Field 
-              label="तालुका" 
-              required 
-              value={data.taluka} 
-              onChangeText={handleMarathiInput("taluka")} 
-              placeholder="मराठी"
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("taluka")}
-          </View>
-          <View style={{ flex: 1, marginLeft: 6, position: 'relative' }}>
-            <Field 
-              label="जिल्हा" 
-              required 
-              value={data.district} 
-              onChangeText={handleMarathiInput("district")} 
-              placeholder="मराठी"
-              onFocus={handleMarathiFieldFocus}
-            />
-            {renderIndicator("district")}
-          </View>
-        </View>
-
-        {/* BROTHERS & SISTERS */}
-        <Text style={styles.subSectionLabel}>भाऊ (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8 }}>
-            <Field label="विवाहित" value={data.brotherMarried} onChangeText={handleNumberInput("brotherMarried")} keyboardType="numeric" />
-          </View>
-          <View style={{ flex: 1, marginLeft: 8 }}>
-            <Field label="अविवाहित" value={data.brotherUnmarried} onChangeText={handleNumberInput("brotherUnmarried")} keyboardType="numeric" />
-          </View>
-        </View>
-
-        <Text style={styles.subSectionLabel}>बहिण (संख्या) <Text style={{ color: "red" }}>*</Text></Text>
-        <View style={styles.row2}>
-          <View style={{ flex: 1, marginRight: 8 }}>
-            <Field label="विवाहित" value={data.sisterMarried} onChangeText={handleNumberInput("sisterMarried")} keyboardType="numeric" />
-          </View>
-          <View style={{ flex: 1, marginLeft: 8 }}>
-            <Field label="अविवाहित" value={data.sisterUnmarried} onChangeText={handleNumberInput("sisterUnmarried")} keyboardType="numeric" />
-          </View>
-        </View>
-
-        <Field
-          label="वैयक्तिक मोबाइल नंबर"
-          value={data.mobile}
-          onChangeText={handleNumberInput("mobile")}
-          keyboardType="phone-pad"
-          placeholder="+91"
-        />
-
-        {/* MARATHI NOTES - WITH EXTRA SPACE FOR KEYBOARD */}
-        <View style={[styles.marathiPadWrap, { position: 'relative', minHeight: 180 }]}>
-          <Text style={{ fontSize: 13, fontWeight: "600", color: "#333", marginBottom: 5 }}>
-            इतर माहिती (auto-translate)
-          </Text>
-          <TextInput
-            style={[styles.marathiPad, translatingFields.marathiNotes && { opacity: 0.6 }]}
-            multiline
-            placeholder="येथे मराठीत टाइप करा किंवा English लिहा..."
-            placeholderTextColor="#bbb"
-            value={data.marathiNotes || ""}
-            onChangeText={handleMarathiInput("marathiNotes")}
-            onFocus={handleMarathiFieldFocus}
-          />
-          {translatingFields.marathiNotes && (
-            <View style={{ position: 'absolute', right: 10, top: 35 }}>
-              <ActivityIndicator size="small" color="#f97316" />
             </View>
-          )}
+            <View style={styles.stepBadge}>
+              <Text style={styles.stepBadgeText}>STEP 2 / 5</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* ── SECTION 1: EDUCATION DETAILS ── */}
+        <View style={[styles.sectionCard, styles.purpleBorder]}>
+          <View style={[styles.sectionCardHeader, styles.purpleHeader]}>
+            <Ionicons name="ribbon-outline" size={18} color="#6D28D9" />
+            <Text style={[styles.sectionHeading, { color: "#6D28D9" }]}>
+              Education Details (शिक्षणाची माहिती)
+            </Text>
+          </View>
+
+          <View style={styles.sectionBody}>
+            {/* Quick Education Level Chips */}
+            <Text style={styles.label}>
+              Education Level (शिक्षण पातळी) <Text style={styles.required}>*</Text>
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.chipsScroll}
+            >
+              {COMMON_EDUCATION_LEVELS.map((item) => (
+                <TouchableOpacity
+                  key={item}
+                  style={[styles.chip, educationLevel === item && styles.chipActive]}
+                  onPress={() => {
+                    setEducationLevel(item);
+                    if (errors.educationLevel) setErrors((p) => ({ ...p, educationLevel: null }));
+                  }}
+                  activeOpacity={0.7}
+                >
+                  <Text
+                    style={[styles.chipText, educationLevel === item && styles.chipTextActive]}
+                  >
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[styles.input, errors.educationLevel && styles.inputError]}
+                placeholder="Or type education level: Graduate / Post Graduate / Engineer"
+                placeholderTextColor="#9CA3AF"
+                value={educationLevel}
+                onChangeText={(val) => {
+                  setEducationLevel(val);
+                  if (errors.educationLevel) setErrors((p) => ({ ...p, educationLevel: null }));
+                }}
+                returnKeyType="next"
+                onSubmitEditing={() => educationRef.current?.focus()}
+              />
+              {errors.educationLevel && (
+                <Text style={styles.errorText}>{errors.educationLevel}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>
+                Degree & Specialization (पदवी / शिक्षण शाखा) <Text style={styles.required}>*</Text>
+              </Text>
+              <TextInput
+                ref={educationRef}
+                style={[styles.input, errors.education && styles.inputError]}
+                placeholder="e.g. B.E. Computer Science, M.B.A. Finance, M.B.B.S."
+                placeholderTextColor="#9CA3AF"
+                value={education}
+                onChangeText={(val) => {
+                  setEducation(val);
+                  if (errors.education) setErrors((p) => ({ ...p, education: null }));
+                }}
+                returnKeyType="next"
+                onSubmitEditing={() => positionRef.current?.focus()}
+              />
+              {errors.education && <Text style={styles.errorText}>{errors.education}</Text>}
+              <Text style={styles.hintText}>
+                उदा. बी.ई., एम.बी.ए., बी.कॉम., डी.एड., इंजिनियर, डॉक्टर इ.
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* ── SECTION 2: OCCUPATION & EMPLOYMENT ── */}
+        <View style={[styles.sectionCard, styles.amberBorder]}>
+          <View style={[styles.sectionCardHeader, styles.amberHeader]}>
+            <MaterialCommunityIcons name="briefcase-outline" size={18} color="#D97706" />
+            <Text style={[styles.sectionHeading, { color: "#B45309" }]}>
+              Employment / Business (नोकरी / व्यवसाय माहिती)
+            </Text>
+          </View>
+
+          <View style={styles.sectionBody}>
+            {/* Occupation Type Selector */}
+            <Text style={styles.label}>Occupation Type (नोकरी/व्यवसाय प्रकार)</Text>
+            <View style={styles.radioRow}>
+              {OCCUPATION_TYPES.map((type) => (
+                <TouchableOpacity
+                  key={type.label}
+                  style={[styles.radioBtn, jobBuzEdu.includes(type.label) && styles.radioBtnActive]}
+                  onPress={() => setJobBuzEdu(type.label)}
+                  activeOpacity={0.7}
+                >
+                  <Text
+                    style={[
+                      styles.radioBtnText,
+                      jobBuzEdu.includes(type.label) && styles.radioBtnTextActive,
+                    ]}
+                  >
+                    {type.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <View style={styles.row2}>
+              <View style={{ flex: 1, marginRight: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Designation (हुद्दा / पद)</Text>
+                  <TextInput
+                    ref={positionRef}
+                    style={styles.input}
+                    placeholder="e.g. Software Engineer"
+                    placeholderTextColor="#9CA3AF"
+                    value={position}
+                    onChangeText={setPosition}
+                    returnKeyType="next"
+                    onSubmitEditing={() => companyRef.current?.focus()}
+                  />
+                </View>
+              </View>
+
+              <View style={{ flex: 1, marginLeft: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Company Name (कंपनी नाव)</Text>
+                  <TextInput
+                    ref={companyRef}
+                    style={styles.input}
+                    placeholder="e.g. TCS / Infosys"
+                    placeholderTextColor="#9CA3AF"
+                    value={company}
+                    onChangeText={setCompany}
+                    returnKeyType="next"
+                    onSubmitEditing={() => placeRef.current?.focus()}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.row2}>
+              <View style={{ flex: 1, marginRight: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Job Location (नोकरीचे ठिकाण / शहर)</Text>
+                  <TextInput
+                    ref={placeRef}
+                    style={styles.input}
+                    placeholder="e.g. Pune, Mumbai"
+                    placeholderTextColor="#9CA3AF"
+                    value={placeOfEmployment}
+                    onChangeText={setPlaceOfEmployment}
+                    returnKeyType="next"
+                    onSubmitEditing={() => phoneRef.current?.focus()}
+                  />
+                </View>
+              </View>
+
+              <View style={{ flex: 1, marginLeft: 8 }}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.label}>Company Phone (ऑफिस फोन)</Text>
+                  <TextInput
+                    ref={phoneRef}
+                    style={styles.input}
+                    placeholder="Phone number"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="phone-pad"
+                    value={companyPhone}
+                    onChangeText={setCompanyPhone}
+                    returnKeyType="next"
+                    onSubmitEditing={() => incomeRef.current?.focus()}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Monthly Income (मासिक उत्पन्न ₹)</Text>
+              <TextInput
+                ref={incomeRef}
+                style={styles.input}
+                placeholder="e.g. 50000"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numeric"
+                value={monthlyIncome}
+                onChangeText={setMonthlyIncome}
+                returnKeyType="done"
+              />
+              <Text style={styles.hintText}>उदा. 35000, 60000, 120000</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* ── ACTION BUTTONS ── */}
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => onBack && onBack()}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="arrow-back" size={18} color="#475569" />
+            <Text style={styles.backBtnText}>Back (मागे)</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.continueBtn, saving && styles.continueBtnDisabled]}
+            onPress={handleSaveAndContinue}
+            disabled={saving}
+            activeOpacity={0.85}
+          >
+            {saving ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <View style={styles.continueBtnContent}>
+                <Text style={styles.continueBtnText}>Save & Continue to Step 3</Text>
+                <Ionicons
+                  name="arrow-forward-circle"
+                  size={20}
+                  color="#FFFFFF"
+                  style={{ marginLeft: 6 }}
+                />
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 14,
+    backgroundColor: "#F8FAFC",
+    flexGrow: 1,
+    paddingBottom: 36,
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#F8FAFC",
+  },
+  loadingText: {
+    marginTop: 10,
+    color: "#64748B",
+    fontSize: 13,
+  },
+  banner: {
+    backgroundColor: "#831843",
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 14,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  bannerTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  bannerTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  bannerTitle: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  bannerSub: {
+    color: "#FCE7F3",
+    fontSize: 11,
+    marginTop: 2,
+  },
+  boldWhite: {
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+  stepBadge: {
+    backgroundColor: "#BE185D",
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  stepBadgeText: {
+    color: "#FFFFFF",
+    fontSize: 10.5,
+    fontWeight: "800",
+  },
+  sectionCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    marginBottom: 14,
+    overflow: "hidden",
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+  },
+  purpleBorder: { borderColor: "#DDD6FE" },
+  purpleHeader: { backgroundColor: "#F5F3FF" },
+  amberBorder: { borderColor: "#FDE68A" },
+  amberHeader: { backgroundColor: "#FFFBEB" },
+  sectionCardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F1F5F9",
+  },
+  sectionHeading: {
+    fontSize: 13.5,
+    fontWeight: "700",
+    marginLeft: 6,
+  },
+  sectionBody: {
+    padding: 14,
+  },
+  inputGroup: {
+    marginBottom: 12,
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#334155",
+    marginBottom: 4,
+  },
+  required: {
+    color: "#EF4444",
+  },
+  input: {
+    height: 42,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 7,
+    paddingHorizontal: 12,
+    fontSize: 13.5,
+    color: "#0F172A",
+    backgroundColor: "#FFFFFF",
+  },
+  inputError: {
+    borderColor: "#EF4444",
+    backgroundColor: "#FEF2F2",
+  },
+  errorText: {
+    fontSize: 11,
+    color: "#EF4444",
+    marginTop: 3,
+  },
+  hintText: {
+    fontSize: 10.5,
+    color: "#64748B",
+    marginTop: 3,
+  },
+  chipsScroll: {
+    flexDirection: "row",
+    paddingVertical: 4,
+    marginBottom: 8,
+    gap: 8,
+  },
+  chip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: "#F1F5F9",
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+  },
+  chipActive: {
+    backgroundColor: "#831843",
+    borderColor: "#831843",
+  },
+  chipText: {
+    fontSize: 12,
+    color: "#334155",
+    fontWeight: "600",
+  },
+  chipTextActive: {
+    color: "#FFFFFF",
+  },
+  radioRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 12,
+    marginTop: 4,
+  },
+  radioBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    backgroundColor: "#F8FAFC",
+  },
+  radioBtnActive: {
+    borderColor: "#D97706",
+    backgroundColor: "#FEF3C7",
+  },
+  radioBtnText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#475569",
+  },
+  radioBtnTextActive: {
+    color: "#B45309",
+    fontWeight: "700",
+  },
+  row2: {
+    flexDirection: "row",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 6,
+  },
+  backBtn: {
+    flex: 0.35,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+    flexDirection: "row",
+    gap: 4,
+  },
+  backBtnText: {
+    fontSize: 13.5,
+    fontWeight: "700",
+    color: "#475569",
+  },
+  continueBtn: {
+    flex: 0.65,
+    backgroundColor: "#831843",
+    height: 50,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  continueBtnDisabled: {
+    opacity: 0.65,
+  },
+  continueBtnContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  continueBtnText: {
+    color: "#FFFFFF",
+    fontSize: 13.5,
+    fontWeight: "700",
+  },
+});
