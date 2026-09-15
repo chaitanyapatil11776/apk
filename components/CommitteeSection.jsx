@@ -19,19 +19,49 @@ export default function CommitteeSection() {
 
   const members = [
     {
-      name: "श्री. रमेश डुंगळे",
-      role: "उपाध्यक्ष",
-      image: require("../assets/member1.png"),
+      name: "श्री. भागवत त्र्यंबक चौधरी",
+      role: "संघटना अध्यक्ष",
+      image: require("../assets/m1.jpeg"),
     },
     {
-      name: "श्री. निरज राणे",
-      role: "सहसचिव",
-      image: require("../assets/member2.png"),
+      name: "श्री. हेमंत श्रीरंग झोपे",
+      role: "अध्यक्ष",
+      image: require("../assets/m2.jpeg"),
     },
     {
-      name: "श्री. सुरेश पंगे",
+      name: "श्री. सिताराम गणपत राणे",
+      role: "कार्याध्यक्ष",
+      image: require("../assets/m3.jpeg"),
+    },
+       {
+      name: "श्री. संदीप नामदेव बन्हाटे",
+      role: "सचिव",
+      image: require("../assets/m4.jpeg"),
+    },
+       {
+      name: "श्री. सुरेश पुंजा फेगडे",
       role: "खजिनदार",
-      image: require("../assets/member3.png"),
+      image: require("../assets/m5.jpeg"),
+    },
+       {
+      name: "श्री. दिगंबर पंढरीनाथ महाजन",
+      role: "उपाध्यक्ष",
+      image: require("../assets/m6.jpeg"),
+    },
+       {
+      name: "श्री. गिरीश सुभाष पाटील",
+      role: "सह-खजिनदार",
+      image: require("../assets/m7.jpeg"),
+    },
+           {
+      name: "श्री. रघुनाथ शंकर फेगडे",
+      role: "वधू-वर मेळावा व्यवस्थापक",
+      image: require("../assets/m8.jpeg"),
+    },
+           {
+      name: "श्री. योगेश भास्कर वायकोळे",
+      role: "सदस्य",
+      image: require("../assets/m9.jpeg"),
     },
   ];
 

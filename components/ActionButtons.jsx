@@ -7,11 +7,11 @@ export default function ActionButtons() {
       {/* Row 1 */}
       <View style={styles.row}>
         <TouchableOpacity style={[styles.btn, { backgroundColor: "#dc2626" }]}>
-          <Text style={styles.text}>वधू-वर नोंदणी 2025</Text>
+          <Text style={styles.text}>वधू-वर नोंदणी 2026</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.btn, { backgroundColor: "#16a34a" }]}>
-          <Text style={styles.text}>2025 सूची मागवा</Text>
+          <Text style={styles.text}>2026 सूची मागवा</Text>
         </TouchableOpacity>
       </View>
 
