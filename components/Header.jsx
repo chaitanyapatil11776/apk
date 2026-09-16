@@ -12,7 +12,7 @@ export default function Header({ onMenuPress }) {
     >
       <View style={styles.leftSection}>
         <Image
-          source={require("../assets/icon.png")}
+          source={require("../assets/logoa.png")}
           style={styles.logo}
         />
         <View>
