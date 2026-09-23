@@ -817,17 +817,17 @@ import apiClient, {
 import { Platform } from "react-native";
 
 export const DEFAULT_MANDALS = [
-  { value: 1, label: "मध्यवर्ती उपनगर मंडळ" },
-  { value: 2, label: "ठाणे जिल्हा मंडळ" },
-  { value: 3, label: "कल्याण मंडळ" },
-  { value: 4, label: "नवी मुंबई मंडळ" },
-  { value: 5, label: "पुणे मंडळ" },
-  { value: 6, label: "नाशिक मंडळ" },
-  { value: 7, label: "जळगाव मंडळ" },
-  { value: 8, label: "धुळे मंडळ" },
-  { value: 9, label: "नंदुरबार मंडळ" },
-  { value: 10, label: "औरंगाबाद मंडळ" },
-  { value: 11, label: "नागपूर मंडळ" },
+  { value: 1, label: "समता भ्रातृमंडळ पिंपरी चिंचवड" },
+  { value: 2, label: "लेवा पाटीदार भ्रातृ मंडळ वाकड" },
+  { value: 3, label: "जळगाव जिल्हा लेवा समाज मंडळ निगडी" },
+  { value: 4, label: "श्री संत आदिशक्ती मुक्ताई देवस्थान दिघी" },
+  { value: 5, label: "लेवा पाटीदार मित्र मंडळ सांगवी" },
+  { value: 6, label: "लेवा उत्कर्ष मंडळ लोणावळा" },
+  { value: 7, label: "एकता भ्रातृ मंडळ तळेगाव-दाभाडे" },
+  { value: 8, label: "पिंपरी चिंचवड लेवा पाटीदार संघ (भ्रातृ मंडळ)" },
+  { value: 9, label: "बहिणाबाई महिला मंडळ निगडी-प्राधिकरण" },
+  { value: 10, label: "लेवा शक्ती सखी मंच" },
+  { value: 11, label: "लेवा संगिनी मंच" },
   { value: 12, label: "LCCIA PCMC" },
 ];
 
