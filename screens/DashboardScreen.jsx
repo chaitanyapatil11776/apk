@@ -17,6 +17,11 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import accountApi from "../api/accountApi";
 import registrationApi from "../api/registrationApi";
 import { getAuthUserId } from "../api/apiClient";
+import {
+  normalizeCandidateType,
+  getCandidateTypeLabel,
+  extractCandidateTypeValue,
+} from "../api/candidateTypeHelper";
 import BottomNavBar from "../components/BottomNavBar";
 
 export default function DashboardScreen({ navigation, route }) {
@@ -40,14 +45,35 @@ export default function DashboardScreen({ navigation, route }) {
     }
 
     try {
+      // Step 2 in flow: Call GetCandidate for logged-in UserId
+      let candidateRecord = null;
+      try {
+        candidateRecord = await registrationApi.getCandidate(userId);
+        console.log("Dashboard candidate record (GetCandidate):", candidateRecord);
+      } catch (candErr) {
+        console.log("Dashboard getCandidate notice:", candErr.message);
+      }
+
       // 1. Fetch full candidate profile
       const profile = await registrationApi.getCandidateProfile(userId);
       console.log("Dashboard candidate profile:", profile);
 
-      if (profile) {
-        setCandidateProfile(profile);
-        if (profile.CandidateId && Number(profile.CandidateId) > 0) {
-          setCandidateId(Number(profile.CandidateId));
+      const mergedProfile = {
+        ...(candidateRecord || {}),
+        ...(profile || {}),
+        CandidateType:
+          extractCandidateTypeValue(candidateRecord) ||
+          extractCandidateTypeValue(profile) ||
+          "",
+      };
+
+      if (profile || candidateRecord) {
+        setCandidateProfile(mergedProfile);
+        const resolvedId = Number(
+          candidateRecord?.CandidateId || profile?.CandidateId || 0
+        );
+        if (resolvedId > 0) {
+          setCandidateId(resolvedId);
         }
       } else {
         // Fallback: resolve candidateId directly
@@ -98,12 +124,8 @@ export default function DashboardScreen({ navigation, route }) {
 
   // Navigate to Suchi Booking wizard
   const handleOpenSuchi = (stepToOpen = null) => {
-    const candidateType =
-      candidateProfile?.CandidateType ||
-      userInfo.GenderCode === "F" ||
-      userInfo.CandidateType === "Bride"
-        ? "Bride"
-        : "Groom";
+    const rawType = extractCandidateTypeValue(candidateProfile);
+    const candidateType = normalizeCandidateType(rawType);
 
     const isSubmitted =
       candidateProfile?.ApplicationFormStatusApplicationRound === "S" ||
@@ -112,7 +134,7 @@ export default function DashboardScreen({ navigation, route }) {
     navigation.navigate("SuchiBooking", {
       candidateId: candidateId || candidateProfile?.CandidateId || 0,
       userId: userId,
-      candidateType: candidateType,
+      candidateType: candidateType || "",
       applicationNo: candidateId > 0 ? `P${candidateId}` : "New",
       currentUser: { ...userInfo, ...candidateProfile },
       isSubmitted: isSubmitted,
@@ -131,10 +153,9 @@ export default function DashboardScreen({ navigation, route }) {
       ? `${candidateProfile.MFirstName} ${candidateProfile.MMiddleName || ""} ${candidateProfile.MLastName || ""}`.trim()
       : "";
 
-  const candidateTypeDisplay =
-    candidateProfile?.CandidateType === "Bride" || candidateProfile?.CandidateType === "वधू"
-      ? "वधू | Bride"
-      : "वर | Groom";
+  const candidateTypeDisplay = getCandidateTypeLabel(
+    extractCandidateTypeValue(candidateProfile)
+  );
 
   const applicationNoDisplay =
     candidateProfile?.ApplicationFormNo ||

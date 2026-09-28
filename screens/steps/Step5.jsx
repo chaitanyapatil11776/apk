@@ -12,6 +12,11 @@ import {
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import registrationApi from "../../api/registrationApi";
 import { getAuthUserId } from "../../api/apiClient";
+import {
+  getCandidateTypeLabel,
+  normalizeCandidateType,
+  extractCandidateTypeValue,
+} from "../../api/candidateTypeHelper";
 
 export default function Step5({
   data = {},
@@ -125,10 +130,9 @@ export default function Step5({
     </View>
   );
 
-  const candidateTypeDisplay =
-    profile.candidateType ||
-    profile.CandidateType ||
-    (currentUser?.UserTypeCode === "candidate" ? "वधू (Bride)" : "वर (Groom)");
+  const rawCandidateType =
+    extractCandidateTypeValue(profile) || data?.candidateType || "";
+  const candidateTypeDisplay = getCandidateTypeLabel(rawCandidateType);
 
   const photoSource = profile.photoBase64
     ? { uri: `data:image/jpeg;base64,${profile.photoBase64}` }

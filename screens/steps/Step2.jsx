@@ -16,14 +16,12 @@ import registrationApi from "../../api/registrationApi";
 import { getAuthUserId } from "../../api/apiClient";
 
 const COMMON_EDUCATION_LEVELS = [
-  "Graduate",
-  "Post Graduate",
-  "Engineer",
   "Doctor",
+  "Doctrate",
+  "Graduate",
+  "Matricr",
   "Diploma",
-  "CA / CS / ICWA",
-  "Ph.D.",
-  "12th / Higher Secondary",
+ 
 ];
 
 const OCCUPATION_TYPES = [
