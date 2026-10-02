@@ -1,184 +1,1471 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar, Alert,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+  Alert,
+  ActivityIndicator,
+  RefreshControl,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
-// ── Info Row ──────────────────────────────────────────────────────────────────
-const InfoRow = ({ icon, label, value }) => (
-  <View style={s.infoRow}>
-    <View style={s.infoIconBox}>
-      <Text style={s.infoIcon}>{icon}</Text>
-    </View>
-    <View style={s.infoText}>
-      <Text style={s.infoLabel}>{label}</Text>
-      <Text style={s.infoValue}>{value || "—"}</Text>
-    </View>
-  </View>
-);
+import {
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native";
 
-// ── Section Card ──────────────────────────────────────────────────────────────
-const SectionCard = ({ title, children }) => (
-  <View style={s.card}>
-    <Text style={s.cardTitle}>{title}</Text>
-    {children}
-  </View>
-);
+import registrationApi from "../api/registrationApi";
 
-// ── Divider ───────────────────────────────────────────────────────────────────
-const Divider = () => <View style={s.divider} />;
+import {
+  getAuthUserId,
+  clearAuth,
+} from "../api/apiClient";
 
-// ── Badge ─────────────────────────────────────────────────────────────────────
-const Badge = ({ value }) => (
-  <View style={[s.badge, value ? s.badgeYes : s.badgeNo]}>
-    <Text style={[s.badgeText, value ? s.badgeTextYes : s.badgeTextNo]}>
-      {value ? "✓  Yes" : "✕  No"}
-    </Text>
-  </View>
-);
+// ============================================================
+// HELPERS
+// ============================================================
 
-// ── Main Profile Screen ───────────────────────────────────────────────────────
-export default function ProfileScreen() {
-  const navigation = useNavigation();
-  const route      = useRoute();
+const getValue = (obj, ...keys) => {
+  if (!obj) return "";
 
-  // Data passed from RegistrationScreen via navigation.navigate("Profile", { user: {...} })
-  const user = route?.params?.user || {
-    fullName:           "Rahul Sharma",
-    email:              "rahul@example.com",
-    mobile:             "9876543210",
-    gender:             "Male",
-    mandal:             "Mandal 1",
-    profileId:          "VV-2025-00412",
-    isPrintedInBooklet: false,
-    bookletPageNumber:  null,
-  };
+  for (const key of keys) {
+    const value = obj[key];
 
-  const initials = user.fullName
-    ? user.fullName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-    : "U";
+    if (
+      value !== undefined &&
+      value !== null &&
+      String(value).trim() !== ""
+    ) {
+      return value;
+    }
+  }
 
-  const handleGoToDashboard = () => navigation.navigate("Dashboard");
+  return "";
+};
 
-  const handleGoToLogin = () =>
-    Alert.alert("Logout", "Do you want to go back to Login?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Yes", onPress: () => navigation.navigate("Login") },
-    ]);
+const displayValue = (value) => {
+  if (
+    value === undefined ||
+    value === null ||
+    String(value).trim() === ""
+  ) {
+    return "—";
+  }
 
+  return String(value);
+};
+
+const getInitials = (name) => {
+  if (!name) return "U";
+
+  return String(name)
+    .trim()
+    .split(/\s+/)
+    .map((word) => word.charAt(0))
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
+
+// ============================================================
+// FORMAT DATE
+// ============================================================
+
+const formatDate = (value) => {
+  if (!value) return "";
+
+  try {
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) {
+      return String(value);
+    }
+
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  } catch {
+    return String(value);
+  }
+};
+
+// ============================================================
+// INFO ROW
+// ============================================================
+
+const InfoRow = ({ icon, label, value }) => {
   return (
-    <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="light-content" backgroundColor="#f97316" />
+    <View style={styles.infoRow}>
 
-      {/* ── Orange Header ── */}
-      <View style={s.header}>
-        <Text style={s.headerTitle}>My Profile</Text>
-        <Text style={s.headerSub}>Vadhu-Var Suchi 2025</Text>
+      <View style={styles.infoIconBox}>
+        <Text style={styles.infoIcon}>
+          {icon}
+        </Text>
       </View>
 
-      <ScrollView contentContainerStyle={s.scroll} showsVerticalScrollIndicator={false}>
+      <View style={styles.infoText}>
 
-        {/* ── Avatar Card ── */}
-        <View style={s.avatarCard}>
-          <View style={s.avatarStrip} />
-          <View style={s.avatarCircle}>
-            <Text style={s.avatarInitials}>{initials}</Text>
-          </View>
-          <Text style={s.userName}>{user.fullName}</Text>
-          <Text style={s.userSub}>{user.gender}  •  {user.mandal}</Text>
-          <View style={s.profileIdPill}>
-            <Text style={s.profileIdLabel}>Profile ID: </Text>
-            <Text style={s.profileIdValue}>{user.profileId}</Text>
-          </View>
+        <Text style={styles.infoLabel}>
+          {label}
+        </Text>
+
+        <Text style={styles.infoValue}>
+          {displayValue(value)}
+        </Text>
+
+      </View>
+
+    </View>
+  );
+};
+
+// ============================================================
+// SECTION CARD
+// ============================================================
+
+const SectionCard = ({ title, children }) => {
+  return (
+    <View style={styles.card}>
+
+      <Text style={styles.cardTitle}>
+        {title}
+      </Text>
+
+      {children}
+
+    </View>
+  );
+};
+
+// ============================================================
+// DIVIDER
+// ============================================================
+
+const Divider = () => {
+  return <View style={styles.divider} />;
+};
+
+// ============================================================
+// BADGE
+// ============================================================
+
+const Badge = ({ value }) => {
+
+  const yes =
+    value === true ||
+    value === 1 ||
+    value === "1" ||
+    String(value).toLowerCase() === "true" ||
+    String(value).toLowerCase() === "yes";
+
+  return (
+    <View
+      style={[
+        styles.badge,
+        yes
+          ? styles.badgeYes
+          : styles.badgeNo,
+      ]}
+    >
+
+      <Text
+        style={[
+          styles.badgeText,
+          yes
+            ? styles.badgeTextYes
+            : styles.badgeTextNo,
+        ]}
+      >
+        {yes ? "✓ Yes" : "✕ No"}
+      </Text>
+
+    </View>
+  );
+};
+
+// ============================================================
+// PROFILE SCREEN
+// ============================================================
+
+export default function ProfileScreen() {
+
+  const navigation = useNavigation();
+
+  const [profile, setProfile] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // ==========================================================
+  // LOAD PROFILE FROM API
+  // ==========================================================
+
+  const loadProfile = async (showLoading = true) => {
+
+    try {
+
+      if (showLoading) {
+        setLoading(true);
+      }
+
+      setErrorMessage("");
+
+      // ------------------------------------------------------
+      // GET LOGGED-IN USER ID
+      // ------------------------------------------------------
+
+      const userId = getAuthUserId();
+
+      console.log(
+        "======================================"
+      );
+
+      console.log(
+        "PROFILE SCREEN"
+      );
+
+      console.log(
+        "Logged in UserId:",
+        userId
+      );
+
+      console.log(
+        "======================================"
+      );
+
+      if (!userId) {
+
+        setErrorMessage(
+          "User ID not found. Please login again."
+        );
+
+        Alert.alert(
+          "Login Required",
+          "Your login session is not available. Please login again.",
+          [
+            {
+              text: "OK",
+              onPress: () => {
+
+                navigation.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: "Login",
+                    },
+                  ],
+                });
+
+              },
+            },
+          ]
+        );
+
+        return;
+      }
+
+      // ------------------------------------------------------
+      // CALL LIVE PROFILE API
+      // ------------------------------------------------------
+
+      console.log(
+        "Calling GetCandidateProfile..."
+      );
+
+      const response =
+        await registrationApi.getCandidateProfile(
+          userId
+        );
+
+      console.log(
+        "PROFILE API RESPONSE:",
+        JSON.stringify(
+          response,
+          null,
+          2
+        )
+      );
+
+      // ------------------------------------------------------
+      // HANDLE API RESPONSE
+      // ------------------------------------------------------
+
+      let data = response;
+
+      if (data?.Data !== undefined) {
+        data = data.Data;
+      }
+
+      if (Array.isArray(data)) {
+        data = data[0];
+      }
+
+      if (!data) {
+
+        throw new Error(
+          "Profile data not found."
+        );
+
+      }
+
+      console.log(
+        "FINAL PROFILE DATA:",
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      );
+
+      setProfile(data);
+
+    } catch (error) {
+
+      console.log(
+        "PROFILE API ERROR:"
+      );
+
+      console.log(
+        error?.response?.data ||
+        error?.message ||
+        error
+      );
+
+      const message =
+        error?.response?.data?.Message ||
+        error?.response?.data?.message ||
+        error?.message ||
+        "Unable to load profile.";
+
+      setErrorMessage(message);
+
+      Alert.alert(
+        "Profile Error",
+        message
+      );
+
+    } finally {
+
+      setLoading(false);
+
+      setRefreshing(false);
+
+    }
+
+  };
+
+  // ==========================================================
+  // LOAD PROFILE WHEN SCREEN OPENS
+  // ==========================================================
+
+  useFocusEffect(
+    useCallback(() => {
+
+      loadProfile(true);
+
+    }, [])
+  );
+
+  // ==========================================================
+  // REFRESH
+  // ==========================================================
+
+  const handleRefresh = () => {
+
+    setRefreshing(true);
+
+    loadProfile(false);
+
+  };
+
+  // ==========================================================
+  // LOGOUT
+  // ==========================================================
+
+  const handleLogout = () => {
+
+    Alert.alert(
+      "Logout",
+      "Do you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+
+        {
+          text: "Logout",
+          style: "destructive",
+
+          onPress: () => {
+
+            clearAuth();
+
+            navigation.reset({
+              index: 0,
+
+              routes: [
+                {
+                  name: "Login",
+                },
+              ],
+            });
+
+          },
+        },
+      ]
+    );
+
+  };
+
+  // ==========================================================
+  // LOADING SCREEN
+  // ==========================================================
+
+  if (loading && !profile) {
+
+    return (
+      <SafeAreaView style={styles.safe}>
+
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={ORANGE}
+        />
+
+        <View style={styles.header}>
+
+          <Text style={styles.headerTitle}>
+            My Profile
+          </Text>
+
+          <Text style={styles.headerSub}>
+            Vadhu-Var Suchi 2025
+          </Text>
+
         </View>
 
-        {/* ── Personal Information ── */}
-        <SectionCard title="👤  Personal Information">
-          <InfoRow icon="🪪" label="Full Name"     value={user.fullName} />
-          <Divider />
-          <InfoRow icon="⚧"  label="Gender"        value={user.gender}   />
-          <Divider />
-          <InfoRow icon="🏛️" label="Mandal"        value={user.mandal}   />
-        </SectionCard>
+        <View style={styles.loadingContainer}>
 
-        {/* ── Contact Details ── */}
-        <SectionCard title="📞  Contact Details">
-          <InfoRow icon="📱" label="Mobile Number"  value={"+91 " + user.mobile} />
-          <Divider />
-          <InfoRow icon="✉️" label="Email Address"  value={user.email}           />
-        </SectionCard>
+          <ActivityIndicator
+            size="large"
+            color={ORANGE}
+          />
 
-        {/* ── Booklet Status ── */}
-        <SectionCard title="📖  Vadhu-Var Suchi Booklet 2025">
-          <View style={s.bookletRow}>
-            <Text style={s.bookletQuestion}>Is my name printed in the booklet?</Text>
-            <Badge value={user.isPrintedInBooklet} />
-          </View>
-          <Divider />
-          <View style={s.bookletRow}>
-            <Text style={s.bookletQuestion}>Page Number</Text>
-            <Text style={s.bookletPage}>{user.bookletPageNumber ?? "N/A"}</Text>
-          </View>
-        </SectionCard>
+          <Text style={styles.loadingText}>
+            Loading profile...
+          </Text>
 
-        {/* ── Status Strip ── */}
-        <View style={s.statusStrip}>
-          <View style={s.statusItem}>
-            <Text style={s.statusValue}>2025</Text>
-            <Text style={s.statusLabel}>Year</Text>
-          </View>
-          <View style={s.statusSep} />
-          <View style={s.statusItem}>
-            <Text style={[s.statusValue, { color: "#16a34a" }]}>Active</Text>
-            <Text style={s.statusLabel}>Status</Text>
-          </View>
-          <View style={s.statusSep} />
-          <View style={s.statusItem}>
-            <Text style={s.statusValue}>0</Text>
-            <Text style={s.statusLabel}>Matches</Text>
-          </View>
         </View>
 
-        {/* ── Action Buttons ── */}
-        <TouchableOpacity style={s.dashBtn} onPress={handleGoToDashboard} activeOpacity={0.85}>
-          <Text style={s.dashBtnText}>Go to Dashboard  →</Text>
+      </SafeAreaView>
+    );
+
+  }
+
+  // ==========================================================
+  // ERROR SCREEN
+  // ==========================================================
+
+  if (!profile && errorMessage) {
+
+    return (
+      <SafeAreaView style={styles.safe}>
+
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={ORANGE}
+        />
+
+        <View style={styles.header}>
+
+          <Text style={styles.headerTitle}>
+            My Profile
+          </Text>
+
+          <Text style={styles.headerSub}>
+            Vadhu-Var Suchi 2025
+          </Text>
+
+        </View>
+
+        <View style={styles.errorContainer}>
+
+          <Text style={styles.errorIcon}>
+            ⚠️
+          </Text>
+
+          <Text style={styles.errorTitle}>
+            Profile Not Available
+          </Text>
+
+          <Text style={styles.errorText}>
+            {errorMessage}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => loadProfile(true)}
+          >
+            <Text style={styles.retryButtonText}>
+              Try Again
+            </Text>
+          </TouchableOpacity>
+
+        </View>
+
+      </SafeAreaView>
+    );
+
+  }
+
+  // ==========================================================
+  // GET PROFILE VALUES
+  // ==========================================================
+
+  const fullName =
+    getValue(
+      profile,
+      "FullName",
+      "fullName",
+      "CandidateName",
+      "candidateName",
+      "Name",
+      "name"
+    ) ||
+    [
+      getValue(
+        profile,
+        "FirstName",
+        "firstName"
+      ),
+
+      getValue(
+        profile,
+        "MiddleName",
+        "middleName"
+      ),
+
+      getValue(
+        profile,
+        "LastName",
+        "lastName"
+      ),
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+  const gender = getValue(
+    profile,
+    "Gender",
+    "gender",
+    "Sex",
+    "sex"
+  );
+
+  const candidateType = getValue(
+    profile,
+    "CandidateType",
+    "candidateType"
+  );
+
+  const mandal = getValue(
+    profile,
+    "Mandal",
+    "mandal",
+    "MandalName",
+    "mandalName"
+  );
+
+  const mobile = getValue(
+    profile,
+    "Mobile",
+    "mobile",
+    "MobileNumber",
+    "mobileNumber",
+    "PersonalMobile",
+    "personalMobile",
+    "ContactNo",
+    "ContactNumber",
+    "Phone",
+    "phone"
+  );
+
+  const email = getValue(
+    profile,
+    "Email",
+    "email",
+    "EmailAddress",
+    "emailAddress"
+  );
+
+  const profileId = getValue(
+    profile,
+    "ProfileId",
+    "profileId",
+    "CandidateId",
+    "candidateId"
+  );
+
+  const applicationNo = getValue(
+    profile,
+    "ApplicationFormNo",
+    "applicationFormNo",
+    "ApplicationNo",
+    "applicationNo"
+  );
+
+  const birthDate = getValue(
+    profile,
+    "BirthDate",
+    "birthDate",
+    "DateOfBirth",
+    "dateOfBirth"
+  );
+
+  const birthPlace = getValue(
+    profile,
+    "BirthPlace",
+    "birthPlace"
+  );
+
+  const educationLevel = getValue(
+    profile,
+    "EducationLevel",
+    "educationLevel"
+  );
+
+  const education = getValue(
+    profile,
+    "Education",
+    "education"
+  );
+
+  const job = getValue(
+    profile,
+    "JobBuzEdu",
+    "jobBuzEdu",
+    "Occupation",
+    "occupation"
+  );
+
+  const position = getValue(
+    profile,
+    "Position",
+    "position"
+  );
+
+  const company = getValue(
+    profile,
+    "Company",
+    "company"
+  );
+
+  const employmentPlace = getValue(
+    profile,
+    "PlaceOfEmployment",
+    "placeOfEmployment"
+  );
+
+  const income = getValue(
+    profile,
+    "MonthlyIncome",
+    "monthlyIncome"
+  );
+
+  const complexion = getValue(
+    profile,
+    "Complexion",
+    "complexion"
+  );
+
+  const bloodGroup = getValue(
+    profile,
+    "BloodGroup",
+    "bloodGroup"
+  );
+
+  const gotra = getValue(
+    profile,
+    "Gotra",
+    "gotra"
+  );
+
+  const mamkul = getValue(
+    profile,
+    "Mamkul",
+    "mamkul"
+  );
+
+  const hometown = getValue(
+    profile,
+    "Hometown",
+    "hometown"
+  );
+
+  const taluka = getValue(
+    profile,
+    "Taluka",
+    "taluka"
+  );
+
+  const district = getValue(
+    profile,
+    "District",
+    "district"
+  );
+
+  const foot = getValue(
+    profile,
+    "Foot",
+    "foot"
+  );
+
+  const inch = getValue(
+    profile,
+    "Inch",
+    "inch"
+  );
+
+  const fatherName = getValue(
+    profile,
+    "NameOfFatherGuardian",
+    "nameOfFatherGuardian",
+    "FatherName",
+    "fatherName"
+  );
+
+  const fatherContact = getValue(
+    profile,
+    "ParentalContactNo1",
+    "parentalContactNo1",
+    "FatherContact",
+    "fatherContact"
+  );
+
+  const fatherContact2 = getValue(
+    profile,
+    "ParentalContactNo2",
+    "parentalContactNo2"
+  );
+
+  const parentAddress = getValue(
+    profile,
+    "ParentalAddress",
+    "parentalAddress"
+  );
+
+  const parentEmail = getValue(
+    profile,
+    "ParentalEmail",
+    "parentalEmail"
+  );
+
+  const expectations = getValue(
+    profile,
+    "Expectations",
+    "expectations"
+  );
+
+  const status = getValue(
+    profile,
+    "Status",
+    "status",
+    "CandidateStatus",
+    "candidateStatus"
+  );
+
+  const isPrinted = getValue(
+    profile,
+    "IsPrintedInBooklet",
+    "isPrintedInBooklet",
+    "PrintedInBooklet",
+    "printedInBooklet"
+  );
+
+  const bookletPage = getValue(
+    profile,
+    "BookletPageNumber",
+    "bookletPageNumber",
+    "PageNumber",
+    "pageNumber"
+  );
+
+  const initials = getInitials(
+    fullName
+  );
+
+  // ==========================================================
+  // SCREEN
+  // ==========================================================
+
+  return (
+    <SafeAreaView style={styles.safe}>
+
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={ORANGE}
+      />
+
+      {/* ================================================== */}
+      {/* HEADER */}
+      {/* ================================================== */}
+
+      <View style={styles.header}>
+
+        <Text style={styles.headerTitle}>
+          My Profile
+        </Text>
+
+        <Text style={styles.headerSub}>
+          Vadhu-Var Suchi 2025
+        </Text>
+
+      </View>
+
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={[ORANGE]}
+          />
+        }
+      >
+
+        {/* ================================================= */}
+        {/* PROFILE CARD */}
+        {/* ================================================= */}
+
+        <View style={styles.avatarCard}>
+
+          <View style={styles.avatarStrip} />
+
+          <View style={styles.avatarCircle}>
+
+            <Text style={styles.avatarInitials}>
+              {initials}
+            </Text>
+
+          </View>
+
+          <Text style={styles.userName}>
+            {displayValue(fullName)}
+          </Text>
+
+          <Text style={styles.userSub}>
+            {displayValue(gender)}
+            {"  •  "}
+            {displayValue(mandal)}
+          </Text>
+
+          <View style={styles.profileIdPill}>
+
+            <Text style={styles.profileIdLabel}>
+              Profile ID:
+            </Text>
+
+            <Text style={styles.profileIdValue}>
+              {displayValue(
+                profileId ||
+                applicationNo
+              )}
+            </Text>
+
+          </View>
+
+        </View>
+
+        {/* ================================================= */}
+        {/* PERSONAL INFORMATION */}
+        {/* ================================================= */}
+
+        <SectionCard title="👤 Personal Information">
+
+          <InfoRow
+            icon="🪪"
+            label="Full Name"
+            value={fullName}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="⚧"
+            label="Gender"
+            value={gender}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="💍"
+            label="Candidate Type"
+            value={candidateType}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🏛️"
+            label="Mandal"
+            value={mandal}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🎂"
+            label="Birth Date"
+            value={formatDate(birthDate)}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📍"
+            label="Birth Place"
+            value={birthPlace}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* CONTACT */}
+        {/* ================================================= */}
+
+        <SectionCard title="📞 Contact Details">
+
+          <InfoRow
+            icon="📱"
+            label="Mobile Number"
+            value={
+              mobile
+                ? `+91 ${mobile}`
+                : ""
+            }
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="✉️"
+            label="Email Address"
+            value={email}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* EDUCATION */}
+        {/* ================================================= */}
+
+        <SectionCard title="🎓 Education & Employment">
+
+          <InfoRow
+            icon="🎓"
+            label="Education Level"
+            value={educationLevel}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📚"
+            label="Education"
+            value={education}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="💼"
+            label="Occupation"
+            value={job}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="👔"
+            label="Position"
+            value={position}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🏢"
+            label="Company"
+            value={company}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📍"
+            label="Place of Employment"
+            value={employmentPlace}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="💰"
+            label="Monthly Income"
+            value={income}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* PERSONAL DETAILS */}
+        {/* ================================================= */}
+
+        <SectionCard title="🧍 Personal Details">
+
+          <InfoRow
+            icon="📏"
+            label="Height"
+            value={
+              foot || inch
+                ? `${foot || 0}' ${inch || 0}"`
+                : ""
+            }
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🎨"
+            label="Complexion"
+            value={complexion}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🩸"
+            label="Blood Group"
+            value={bloodGroup}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🛕"
+            label="Gotra"
+            value={gotra}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="👪"
+            label="Mamkul"
+            value={mamkul}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🏠"
+            label="Hometown"
+            value={hometown}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📍"
+            label="Taluka"
+            value={taluka}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🗺️"
+            label="District"
+            value={district}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* PARENT / GUARDIAN */}
+        {/* ================================================= */}
+
+        <SectionCard title="👨‍👩‍👧 Parent / Guardian">
+
+          <InfoRow
+            icon="👨"
+            label="Father / Guardian"
+            value={fatherName}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📱"
+            label="Contact Number"
+            value={fatherContact}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📱"
+            label="Alternate Contact"
+            value={fatherContact2}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🏠"
+            label="Address"
+            value={parentAddress}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="✉️"
+            label="Email"
+            value={parentEmail}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* EXPECTATIONS */}
+        {/* ================================================= */}
+
+        <SectionCard title="❤️ Expectations">
+
+          <InfoRow
+            icon="💭"
+            label="Partner Expectations"
+            value={expectations}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* APPLICATION */}
+        {/* ================================================= */}
+
+        <SectionCard title="📄 Application">
+
+          <InfoRow
+            icon="🔢"
+            label="Application Number"
+            value={applicationNo}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="🆔"
+            label="Candidate ID"
+            value={profileId}
+          />
+
+          <Divider />
+
+          <InfoRow
+            icon="📌"
+            label="Status"
+            value={status || "Active"}
+          />
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* BOOKLET */}
+        {/* ================================================= */}
+
+        <SectionCard title="📖 Vadhu-Var Suchi Booklet 2025">
+
+          <View style={styles.bookletRow}>
+
+            <Text style={styles.bookletQuestion}>
+              Is my name printed in the booklet?
+            </Text>
+
+            <Badge
+              value={isPrinted}
+            />
+
+          </View>
+
+          <Divider />
+
+          <View style={styles.bookletRow}>
+
+            <Text style={styles.bookletQuestion}>
+              Page Number
+            </Text>
+
+            <Text style={styles.bookletPage}>
+              {displayValue(bookletPage)}
+            </Text>
+
+          </View>
+
+        </SectionCard>
+
+        {/* ================================================= */}
+        {/* STATUS */}
+        {/* ================================================= */}
+
+        <View style={styles.statusStrip}>
+
+          <View style={styles.statusItem}>
+
+            <Text style={styles.statusValue}>
+              2025
+            </Text>
+
+            <Text style={styles.statusLabel}>
+              Year
+            </Text>
+
+          </View>
+
+          <View style={styles.statusSep} />
+
+          <View style={styles.statusItem}>
+
+            <Text
+              style={[
+                styles.statusValue,
+                {
+                  color: "#16a34a",
+                },
+              ]}
+            >
+              {status || "Active"}
+            </Text>
+
+            <Text style={styles.statusLabel}>
+              Status
+            </Text>
+
+          </View>
+
+          <View style={styles.statusSep} />
+
+          <View style={styles.statusItem}>
+
+            <Text style={styles.statusValue}>
+              —
+            </Text>
+
+            <Text style={styles.statusLabel}>
+              Matches
+            </Text>
+
+          </View>
+
+        </View>
+
+        {/* ================================================= */}
+        {/* REFRESH */}
+        {/* ================================================= */}
+
+        <TouchableOpacity
+          style={styles.refreshButton}
+          onPress={handleRefresh}
+          activeOpacity={0.85}
+        >
+
+          <Text style={styles.refreshButtonText}>
+            ↻  Refresh Profile
+          </Text>
+
         </TouchableOpacity>
 
-        <TouchableOpacity style={s.logoutBtn} onPress={handleGoToLogin} activeOpacity={0.85}>
-          <Text style={s.logoutBtnText}>Back to Login</Text>
+        {/* ================================================= */}
+        {/* DASHBOARD */}
+        {/* ================================================= */}
+
+        <TouchableOpacity
+          style={styles.dashboardButton}
+          onPress={() =>
+            navigation.navigate("Dashboard")
+          }
+          activeOpacity={0.85}
+        >
+
+          <Text style={styles.dashboardButtonText}>
+            Go to Dashboard →
+          </Text>
+
+        </TouchableOpacity>
+
+        {/* ================================================= */}
+        {/* LOGOUT */}
+        {/* ================================================= */}
+
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.85}
+        >
+
+          <Text style={styles.logoutButtonText}>
+            Logout
+          </Text>
+
         </TouchableOpacity>
 
         <View style={{ height: 40 }} />
+
       </ScrollView>
+
     </SafeAreaView>
   );
 }
 
-// ── Styles ────────────────────────────────────────────────────────────────────
+// ============================================================
+// COLORS
+// ============================================================
+
 const ORANGE = "#f97316";
+
 const ORANGE_LIGHT = "#fff7ed";
-const TEXT1  = "#111827";
-const TEXT2  = "#6b7280";
+
+const TEXT1 = "#111827";
+
+const TEXT2 = "#6b7280";
+
 const BORDER = "#e5e7eb";
-const WHITE  = "#ffffff";
 
-const s = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#f3f4f6" },
+const WHITE = "#ffffff";
 
-  // Header
+// ============================================================
+// STYLES
+// ============================================================
+
+const styles = StyleSheet.create({
+
+  safe: {
+    flex: 1,
+    backgroundColor: "#f3f4f6",
+  },
+
+  // ==========================================================
+  // HEADER
+  // ==========================================================
+
   header: {
     backgroundColor: ORANGE,
     paddingTop: 16,
     paddingBottom: 20,
     alignItems: "center",
   },
-  headerTitle: { color: WHITE, fontSize: 20, fontWeight: "800", letterSpacing: 0.3 },
-  headerSub:   { color: "rgba(255,255,255,0.8)", fontSize: 12, marginTop: 2, fontWeight: "500" },
 
-  scroll: { paddingHorizontal: 16, paddingTop: 0 },
+  headerTitle: {
+    color: WHITE,
+    fontSize: 20,
+    fontWeight: "800",
+    letterSpacing: 0.3,
+  },
 
-  // Avatar card
+  headerSub: {
+    color: "rgba(255,255,255,0.8)",
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: "500",
+  },
+
+  // ==========================================================
+  // SCROLL
+  // ==========================================================
+
+  scroll: {
+    paddingHorizontal: 16,
+    paddingTop: 0,
+  },
+
+  // ==========================================================
+  // LOADING
+  // ==========================================================
+
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 30,
+  },
+
+  loadingText: {
+    marginTop: 12,
+    color: TEXT2,
+    fontSize: 14,
+  },
+
+  // ==========================================================
+  // ERROR
+  // ==========================================================
+
+  errorContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 30,
+  },
+
+  errorIcon: {
+    fontSize: 45,
+    marginBottom: 15,
+  },
+
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: TEXT1,
+    marginBottom: 8,
+  },
+
+  errorText: {
+    textAlign: "center",
+    color: TEXT2,
+    fontSize: 14,
+    lineHeight: 21,
+    marginBottom: 20,
+  },
+
+  retryButton: {
+    backgroundColor: ORANGE,
+    paddingHorizontal: 28,
+    paddingVertical: 13,
+    borderRadius: 10,
+  },
+
+  retryButtonText: {
+    color: WHITE,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+
+  // ==========================================================
+  // PROFILE CARD
+  // ==========================================================
+
   avatarCard: {
     backgroundColor: WHITE,
     borderRadius: 16,
@@ -187,36 +1474,63 @@ const s = StyleSheet.create({
     marginTop: -1,
     marginBottom: 14,
     overflow: "hidden",
+
     elevation: 4,
+
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
   },
+
   avatarStrip: {
     width: "100%",
     height: 56,
     backgroundColor: ORANGE,
     marginBottom: -36,
   },
+
   avatarCircle: {
     width: 84,
     height: 84,
     borderRadius: 42,
+
     backgroundColor: ORANGE_LIGHT,
+
     borderWidth: 4,
     borderColor: WHITE,
+
     alignItems: "center",
     justifyContent: "center",
+
     elevation: 4,
-    shadowColor: ORANGE,
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
   },
-  avatarInitials: { fontSize: 30, fontWeight: "800", color: ORANGE },
-  userName:  { fontSize: 20, fontWeight: "800", color: TEXT1, marginTop: 10, marginBottom: 2 },
-  userSub:   { fontSize: 13, color: TEXT2, fontWeight: "500", marginBottom: 10 },
+
+  avatarInitials: {
+    fontSize: 30,
+    fontWeight: "800",
+    color: ORANGE,
+  },
+
+  userName: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: TEXT1,
+    marginTop: 10,
+    marginBottom: 2,
+    textAlign: "center",
+  },
+
+  userSub: {
+    fontSize: 13,
+    color: TEXT2,
+    fontWeight: "500",
+    marginBottom: 10,
+  },
+
   profileIdPill: {
     flexDirection: "row",
     backgroundColor: ORANGE_LIGHT,
@@ -225,10 +1539,24 @@ const s = StyleSheet.create({
     paddingVertical: 6,
     alignItems: "center",
   },
-  profileIdLabel: { fontSize: 12, color: TEXT2, fontWeight: "500" },
-  profileIdValue: { fontSize: 13, color: ORANGE, fontWeight: "800", letterSpacing: 0.5 },
 
-  // Section card
+  profileIdLabel: {
+    fontSize: 12,
+    color: TEXT2,
+    fontWeight: "500",
+  },
+
+  profileIdValue: {
+    fontSize: 13,
+    color: ORANGE,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+
+  // ==========================================================
+  // CARD
+  // ==========================================================
+
   card: {
     backgroundColor: WHITE,
     borderRadius: 14,
@@ -236,12 +1564,18 @@ const s = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 6,
     marginBottom: 14,
+
     elevation: 2,
+
     shadowColor: "#000",
     shadowOpacity: 0.06,
     shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
+
   cardTitle: {
     fontSize: 12,
     fontWeight: "800",
@@ -251,68 +1585,222 @@ const s = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // Info row
-  infoRow:    { flexDirection: "row", alignItems: "center", paddingVertical: 10 },
-  infoIconBox:{ width: 36, height: 36, borderRadius: 10, backgroundColor: ORANGE_LIGHT, alignItems: "center", justifyContent: "center", marginRight: 12 },
-  infoIcon:   { fontSize: 16 },
-  infoText:   { flex: 1 },
-  infoLabel:  { fontSize: 10, color: TEXT2, fontWeight: "600", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 2 },
-  infoValue:  { fontSize: 15, color: TEXT1, fontWeight: "600" },
-  divider:    { height: 1, backgroundColor: BORDER },
+  // ==========================================================
+  // INFO ROW
+  // ==========================================================
 
-  // Booklet
-  bookletRow:     { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 12 },
-  bookletQuestion:{ fontSize: 14, color: TEXT1, fontWeight: "500", flex: 1, paddingRight: 8 },
-  bookletPage:    { fontSize: 15, color: TEXT2, fontWeight: "700" },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
 
-  // Badge
-  badge:       { borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5 },
-  badgeYes:    { backgroundColor: "#dcfce7" },
-  badgeNo:     { backgroundColor: "#fee2e2" },
-  badgeText:   { fontSize: 13, fontWeight: "700" },
-  badgeTextYes:{ color: "#16a34a" },
-  badgeTextNo: { color: "#dc2626" },
+  infoIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: ORANGE_LIGHT,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
 
-  // Status strip
+  infoIcon: {
+    fontSize: 16,
+  },
+
+  infoText: {
+    flex: 1,
+  },
+
+  infoLabel: {
+    fontSize: 10,
+    color: TEXT2,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 2,
+  },
+
+  infoValue: {
+    fontSize: 15,
+    color: TEXT1,
+    fontWeight: "600",
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: BORDER,
+  },
+
+  // ==========================================================
+  // BOOKLET
+  // ==========================================================
+
+  bookletRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+  },
+
+  bookletQuestion: {
+    fontSize: 14,
+    color: TEXT1,
+    fontWeight: "500",
+    flex: 1,
+    paddingRight: 8,
+  },
+
+  bookletPage: {
+    fontSize: 15,
+    color: TEXT2,
+    fontWeight: "700",
+  },
+
+  // ==========================================================
+  // BADGE
+  // ==========================================================
+
+  badge: {
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+  },
+
+  badgeYes: {
+    backgroundColor: "#dcfce7",
+  },
+
+  badgeNo: {
+    backgroundColor: "#fee2e2",
+  },
+
+  badgeText: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+
+  badgeTextYes: {
+    color: "#16a34a",
+  },
+
+  badgeTextNo: {
+    color: "#dc2626",
+  },
+
+  // ==========================================================
+  // STATUS
+  // ==========================================================
+
   statusStrip: {
     flexDirection: "row",
     backgroundColor: WHITE,
     borderRadius: 14,
     paddingVertical: 16,
     marginBottom: 14,
+
     elevation: 2,
+
     shadowColor: "#000",
     shadowOpacity: 0.06,
     shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
-  statusItem:  { flex: 1, alignItems: "center" },
-  statusValue: { fontSize: 16, fontWeight: "800", color: ORANGE, marginBottom: 2 },
-  statusLabel: { fontSize: 11, color: TEXT2, fontWeight: "500" },
-  statusSep:   { width: 1, backgroundColor: BORDER },
 
-  // Buttons
-  dashBtn: {
+  statusItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  statusValue: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: ORANGE,
+    marginBottom: 2,
+  },
+
+  statusLabel: {
+    fontSize: 11,
+    color: TEXT2,
+    fontWeight: "500",
+  },
+
+  statusSep: {
+    width: 1,
+    backgroundColor: BORDER,
+  },
+
+  // ==========================================================
+  // REFRESH BUTTON
+  // ==========================================================
+
+  refreshButton: {
+    backgroundColor: WHITE,
+    borderRadius: 12,
+    paddingVertical: 13,
+    alignItems: "center",
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: BORDER,
+  },
+
+  refreshButtonText: {
+    color: TEXT1,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+
+  // ==========================================================
+  // DASHBOARD BUTTON
+  // ==========================================================
+
+  dashboardButton: {
     backgroundColor: ORANGE,
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: "center",
     marginBottom: 12,
+
     elevation: 4,
+
     shadowColor: ORANGE,
     shadowOpacity: 0.35,
     shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-  },
-  dashBtnText: { color: WHITE, fontSize: 16, fontWeight: "800", letterSpacing: 0.4 },
 
-  logoutBtn: {
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+  },
+
+  dashboardButtonText: {
+    color: WHITE,
+    fontSize: 16,
+    fontWeight: "800",
+    letterSpacing: 0.4,
+  },
+
+  // ==========================================================
+  // LOGOUT BUTTON
+  // ==========================================================
+
+  logoutButton: {
     backgroundColor: WHITE,
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: "center",
     borderWidth: 1.5,
-    borderColor: ORANGE,
+    borderColor: "#dc2626",
   },
-  logoutBtnText: { color: ORANGE, fontSize: 15, fontWeight: "700" },
+
+  logoutButtonText: {
+    color: "#dc2626",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+
 });
